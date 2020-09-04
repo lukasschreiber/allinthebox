@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "All in the Box", "technik_ts\All in the Box.csproj", "{138C806D-898E-4815-B03B-B22D1454208F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "All in the Box", "Source\All in the Box.csproj", "{138C806D-898E-4815-B03B-B22D1454208F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5B85E2D7-2005-4496-B5D7-59C68A1EC91D} = {5B85E2D7-2005-4496-B5D7-59C68A1EC91D}
 	EndProjectSection
