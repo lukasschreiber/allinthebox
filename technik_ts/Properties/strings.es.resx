@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="add" xml:space="preserve">
+    <value>Adjuntar</value>
+  </data>
+  <data name="addButton" xml:space="preserve">
+    <value>Adjuntar</value>
+  </data>
+  <data name="admin" xml:space="preserve">
+    <value>Administrador</value>
+  </data>
+  <data name="allFilesType" xml:space="preserve">
+    <value>Todos archivos</value>
+  </data>
+  <data name="annually" xml:space="preserve">
+    <value>cada año</value>
+  </data>
+  <data name="atNextStart" xml:space="preserve">
+    <value>de próximo arranque</value>
+  </data>
+  <data name="autoBackup" xml:space="preserve">
+    <value>Backup automático</value>
+  </data>
+  <data name="available" xml:space="preserve">
+    <value>quieto</value>
+  </data>
+  <data name="back" xml:space="preserve">
+    <value>Retornar</value>
+  </data>
+  <data name="backup" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="BackupManager" xml:space="preserve">
+    <value>Ejecutivo del backup</value>
+  </data>
+  <data name="backupManually" xml:space="preserve">
+    <value>Aseguar manual</value>
+  </data>
+  <data name="barcode" xml:space="preserve">
+    <value>Código de barras</value>
+  </data>
+  <data name="barcodeColor" xml:space="preserve">
+    <value>Color de código de barras</value>
+  </data>
+  <data name="borrow" xml:space="preserve">
+    <value>Prestar</value>
+  </data>
+  <data name="borrowed" xml:space="preserve">
+    <value>Préstamo</value>
+  </data>
+  <data name="borrowedItalic" xml:space="preserve">
+    <value>Cosas préstamos en cursiva</value>
+  </data>
+  <data name="borrowedMarked" xml:space="preserve">
+    <value>Destacar cosas préstamos</value>
+  </data>
+  <data name="borrowMarkedSelectedColor" xml:space="preserve">
+    <value>selección de color de cosas prestados</value>
+  </data>
+  <data name="by" xml:space="preserve">
+    <value>de</value>
+    <comment>entliehen von Lukas</comment>
+  </data>
+  <data name="choosePreset" xml:space="preserve">
+    <value>Elegir una exhibición</value>
+  </data>
+  <data name="close" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
+  <data name="comment" xml:space="preserve">
+    <value>Comentario</value>
+  </data>
+  <data name="commentColor" xml:space="preserve">
+    <value>Color de comentario</value>
+  </data>
+  <data name="daily" xml:space="preserve">
+    <value>diario</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>Borrar</value>
+  </data>
+  <data name="deleteError" xml:space="preserve">
+    <value>¿Quieres borrar todos los errors de verdad?</value>
+  </data>
+  <data name="deleteLine" xml:space="preserve">
+    <value>¿Quieres borrar la línea de verdad?</value>
+  </data>
+  <data name="deleteLog" xml:space="preserve">
+    <value>¿Quieres borrar todos los lemas de corredera?</value>
+  </data>
+  <data name="doc" xml:space="preserve">
+    <value>Documento</value>
+  </data>
+  <data name="doku" xml:space="preserve">
+    <value>#del</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="errorCredentialsWrong" xml:space="preserve">
+    <value>Passwort o nombre son falsos...</value>
+  </data>
+  <data name="errorDeleted" xml:space="preserve">
+    <value>memoria error borró</value>
+  </data>
+  <data name="errorEmpty" xml:space="preserve">
+    <value>Por favor llena ambas casillas...</value>
+  </data>
+  <data name="errorLog" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="exactBarcode" xml:space="preserve">
+    <value>busca exacta de código de barras</value>
+  </data>
+  <data name="excel" xml:space="preserve">
+    <value>Tabla de excel</value>
+    <comment>bsp.: Ausliehliste von Lukas erstellt am 30.10.2019</comment>
+  </data>
+  <data name="exit" xml:space="preserve">
+    <value>Abandonar</value>
+  </data>
+  <data name="file" xml:space="preserve">
+    <value>Archivo</value>
+    <comment>Datei &quot;test&quot; wurde erfolgreich gespeichert</comment>
+  </data>
+  <data name="fileAlreadyExists" xml:space="preserve">
+    <value>¡Este archivo ya estista!</value>
+  </data>
+  <data name="fileCreated" xml:space="preserve">
+    <value>Creó archivo</value>
+  </data>
+  <data name="fileSavedSentence_2" xml:space="preserve">
+    <value>Está almecenando con efecto.</value>
+  </data>
+  <data name="fontColor" xml:space="preserve">
+    <value>Tipo de letra</value>
+  </data>
+  <data name="fontSize" xml:space="preserve">
+    <value>Tamaño de letra</value>
+  </data>
+  <data name="found" xml:space="preserve">
+    <value>encontraba</value>
+  </data>
+  <data name="help" xml:space="preserve">
+    <value>Ayuda</value>
+  </data>
+  <data name="hotKeys" xml:space="preserve">
+    <value>Combinación de tecla</value>
+  </data>
+  <data name="imageFiles" xml:space="preserve">
+    <value>Achivo de imagen</value>
+  </data>
+  <data name="imageOnTop" xml:space="preserve">
+    <value>vista completa del ímagen siempre arriba</value>
+  </data>
+  <data name="infotext" xml:space="preserve">
+    <value>Todas derechas están con Lukas Schreiber | Polymation. Multiplicar la programa o vender la licencia está contradico. Es posible de comprar otras licencias el la pagína patreon de la programa. Muchas gracias a Miriam Janßen por el apoyo y la inspiración por la programa. Además gracias a Mathis Kaiser por la tradicción francesa.</value>
+    <comment>*Lizenz, Lizenzen</comment>
+  </data>
+  <data name="itemAddButton" xml:space="preserve">
+    <value>Añadir</value>
+  </data>
+  <data name="itemAddErrorEmpty" xml:space="preserve">
+    <value>Tanto la casilla del código de barras como del nombre no poden hacer carente.</value>
+  </data>
+  <data name="joke" xml:space="preserve">
+    <value>Aquí esta un christe (-:</value>
+  </data>
+  <data name="lastBackup" xml:space="preserve">
+    <value>Último backup</value>
+  </data>
+  <data name="linkedIn" xml:space="preserve">
+    <value>Lukas Schreiber en LinkedIn</value>
+  </data>
+  <data name="list" xml:space="preserve">
+    <value>Lista de prestamo</value>
+  </data>
+  <data name="listSentence_1" xml:space="preserve">
+    <value>Lista de prestamo de</value>
+  </data>
+  <data name="listSentence_2" xml:space="preserve">
+    <value>elaborado el</value>
+  </data>
+  <data name="loadPreset" xml:space="preserve">
+    <value>Cargar la exhibición</value>
+  </data>
+  <data name="log" xml:space="preserve">
+    <value>logaritmo</value>
+  </data>
+  <data name="logDeleted" xml:space="preserve">
+    <value>log borrado</value>
+  </data>
+  <data name="loggedInAs" xml:space="preserve">
+    <value>Registrarías como</value>
+    <comment>Angemeldet als Lukas</comment>
+  </data>
+  <data name="logger" xml:space="preserve">
+    <value>logger</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Iniciar la seción</value>
+  </data>
+  <data name="menuBorrow" xml:space="preserve">
+    <value>Línea de modificación de estado</value>
+  </data>
+  <data name="menuDeleteRow" xml:space="preserve">
+    <value>Borrar la línea</value>
+  </data>
+  <data name="minLength" xml:space="preserve">
+    <value>largura mínima</value>
+  </data>
+  <data name="monthly" xml:space="preserve">
+    <value>mensual</value>
+  </data>
+  <data name="MultiAuswahlTool" xml:space="preserve">
+    <value>herramienta de selección múltiple</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="nameColor" xml:space="preserve">
+    <value>Color de nombre</value>
+  </data>
+  <data name="namingViolation" xml:space="preserve">
+    <value>Este usario ya estista.</value>
+  </data>
+  <data name="never" xml:space="preserve">
+    <value>jamás</value>
+  </data>
+  <data name="newUser" xml:space="preserve">
+    <value>Usario nuevo</value>
+  </data>
+  <data name="nextBackup" xml:space="preserve">
+    <value>Próximo backup</value>
+  </data>
+  <data name="noItem" xml:space="preserve">
+    <value>Elegías ningún ítem</value>
+  </data>
+  <data name="noResults" xml:space="preserve">
+    <value>No resultados</value>
+  </data>
+  <data name="noRowSelected" xml:space="preserve">
+    <value>Elegías ningún línea</value>
+  </data>
+  <data name="noteScanner" xml:space="preserve">
+    <value>¡Solo usas estas regulaciónes si cambias el escáner!</value>
+  </data>
+  <data name="nothingSelected" xml:space="preserve">
+    <value>Ze momento nada esta elegiría</value>
+  </data>
+  <data name="notLoggedIn" xml:space="preserve">
+    <value>No estas registrarse</value>
+  </data>
+  <data name="noUsb" xml:space="preserve">
+    <value>No memoria USB</value>
+  </data>
+  <data name="of" xml:space="preserve">
+    <value>de</value>
+    <comment>2 von 5</comment>
+  </data>
+  <data name="openOnce" xml:space="preserve">
+    <value>Cada ventana abrir solo una vez</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="passwordAndUserFilled" xml:space="preserve">
+    <value>¡Tienes que llenar el password y el nombre!</value>
+  </data>
+  <data name="picture" xml:space="preserve">
+    <value>Foto</value>
+    <comment>cuadro= gemalt
+foto= fotografiert</comment>
+  </data>
+  <data name="preset" xml:space="preserve">
+    <value>Exhibición vacío</value>
+  </data>
+  <data name="presetType" xml:space="preserve">
+    <value>Exhibición</value>
+  </data>
+  <data name="primeColor" xml:space="preserve">
+    <value>Color primario</value>
+  </data>
+  <data name="rate" xml:space="preserve">
+    <value>Evaluación</value>
+  </data>
+  <data name="refresh" xml:space="preserve">
+    <value>actualizar</value>
+  </data>
+  <data name="refreshedFile" xml:space="preserve">
+    <value>Archibo esta actualiza.</value>
+  </data>
+  <data name="regal" xml:space="preserve">
+    <value>Estantería</value>
+  </data>
+  <data name="regalDelete" xml:space="preserve">
+    <value>¿Qieres borrar la estanería de verdad?</value>
+  </data>
+  <data name="regalfach" xml:space="preserve">
+    <value>Compartimiento de estantería</value>
+  </data>
+  <data name="regalmanager" xml:space="preserve">
+    <value>Mánager de estantería</value>
+  </data>
+  <data name="regalManagerDescribe" xml:space="preserve">
+    <value>Para clasificar las estantes puedes adaptarlas en la izquierda y trasladarlas libre en la ímagen. La ímagen de fondo por ejemplo puedes crear en Paint. Para ello simplemente grabas la exhibición.</value>
+    <comment>Im deutschen besser: ...kann zum Beispiel in Paint erstellt werden...</comment>
+  </data>
+  <data name="reset" xml:space="preserve">
+    <value>Reiniciar</value>
+  </data>
+  <data name="resetHotkeys" xml:space="preserve">
+    <value>reiniciar para origen</value>
+  </data>
+  <data name="restore" xml:space="preserve">
+    <value>Reconstitruir</value>
+  </data>
+  <data name="restoreOk" xml:space="preserve">
+    <value>Backup ha cargado con éxito</value>
+  </data>
+  <data name="rmOnTop" xml:space="preserve">
+    <value>Mánager de estantería siempre arriba</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Grabar</value>
+  </data>
+  <data name="saveAsDoc" xml:space="preserve">
+    <value>Grabar como archivo</value>
+  </data>
+  <data name="savePreset" xml:space="preserve">
+    <value>Grabar exhibición</value>
+  </data>
+  <data name="saveQuestion" xml:space="preserve">
+    <value>consulta de memoria</value>
+    <comment>als überschrift für &quot;wantToSave&quot;</comment>
+  </data>
+  <data name="scanner" xml:space="preserve">
+    <value>escáner de códigos de barras</value>
+  </data>
+  <data name="scrollToFirst" xml:space="preserve">
+    <value>desplazar para primero resultado</value>
+  </data>
+  <data name="searchBarcode" xml:space="preserve">
+    <value>Buscar código de barras</value>
+  </data>
+  <data name="searchComments" xml:space="preserve">
+    <value>Buscar comentario</value>
+  </data>
+  <data name="searchNames" xml:space="preserve">
+    <value>Buscar nombres</value>
+  </data>
+  <data name="searchSettings" xml:space="preserve">
+    <value>regulación de buscar</value>
+  </data>
+  <data name="searchStandard" xml:space="preserve">
+    <value>estándar de buscar</value>
+  </data>
+  <data name="searchWhileTyping" xml:space="preserve">
+    <value>buscar cuando teclear</value>
+  </data>
+  <data name="secondColor" xml:space="preserve">
+    <value>Color sekundario</value>
+  </data>
+  <data name="selectColor" xml:space="preserve">
+    <value>color a escoger</value>
+  </data>
+  <data name="selectOnTop" xml:space="preserve">
+    <value>herramienta de selección múltiple siempre arriba</value>
+  </data>
+  <data name="settingsOnTop" xml:space="preserve">
+    <value>ajuste siempre arriba</value>
+  </data>
+  <data name="shift" xml:space="preserve">
+    <value>tecla shift</value>
+  </data>
+  <data name="state" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="submit" xml:space="preserve">
+    <value>Confirmar</value>
+  </data>
+  <data name="suffix" xml:space="preserve">
+    <value>sufijo</value>
+  </data>
+  <data name="suffixSendMin" xml:space="preserve">
+    <value>mínimo sufijo</value>
+  </data>
+  <data name="system" xml:space="preserve">
+    <value>Sistema</value>
+  </data>
+  <data name="systemClose" xml:space="preserve">
+    <value>sistema está cerrando</value>
+  </data>
+  <data name="tableDesign" xml:space="preserve">
+    <value>diseño de tabla</value>
+  </data>
+  <data name="tableView" xml:space="preserve">
+    <value>opinión de tabla</value>
+  </data>
+  <data name="tick" xml:space="preserve">
+    <value>Garabato</value>
+  </data>
+  <data name="timeFormat" xml:space="preserve">
+    <value>Horas</value>
+    <comment>z.B. 9:30 Uhr</comment>
+  </data>
+  <data name="user" xml:space="preserve">
+    <value>Usario</value>
+  </data>
+  <data name="userManager" xml:space="preserve">
+    <value>Mánager de usario</value>
+  </data>
+  <data name="username" xml:space="preserve">
+    <value>Nombre de usario</value>
+  </data>
+  <data name="useUSB" xml:space="preserve">
+    <value>Aplicar USB por alternativo...</value>
+  </data>
+  <data name="version" xml:space="preserve">
+    <value>Versión</value>
+  </data>
+  <data name="wantToSave" xml:space="preserve">
+    <value>¿Quieres grabar la lista para archivo?</value>
+  </data>
+  <data name="weekly" xml:space="preserve">
+    <value>semanal</value>
+  </data>
+  <data name="windowMaximize" xml:space="preserve">
+    <value>Maximizar</value>
+  </data>
+  <data name="windowMinimize" xml:space="preserve">
+    <value>Minimizar</value>
+  </data>
+  <data name="windowNormal" xml:space="preserve">
+    <value>Archicarse</value>
+  </data>
+  <data name="windowSerttings" xml:space="preserve">
+    <value>Calibración de ventana</value>
+  </data>
+</root>

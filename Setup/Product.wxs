@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define All in the Box_TargetDir=$(var.All in the Box.TargetDir)?>
+	<Product Id="*" Name="All in the Box" Language="1033" Version="1.8.2.0" Manufacturer="All in the Box" UpgradeCode="40746917-52d9-4a57-abc8-b0f1ce73278e">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <UIRef Id="WixUI_Minimal" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.All in the Box_TargetDir)Installer/eula.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.All in the Box_TargetDir)Installer/Dialog.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.All in the Box_TargetDir)Installer/Banner.bmp" />
+
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="ProductIcon" SourceFile="$(var.All in the Box_TargetDir)icon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="ProductIcon" />
+
+    <Feature Id="ProductFeature" Title="Setup" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentGroupRef Id="es_files" />
+			<ComponentGroupRef Id="fr_files" />
+			<ComponentGroupRef Id="en_files" />
+			<ComponentGroupRef Id="de_files" />
+      <ComponentRef Id="ApplicationDesktopShortcut" />
+      <ComponentRef Id="ApplicationShortcut" />
+      <ComponentGroupRef Id="presets_files" />
+    </Feature>
+	</Product>
+
+	<Fragment>    
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="*">
+        <Shortcut Id="ApplicationStartMenuShortcut" 
+                  Name="All in the Box"
+                  Description="All in the Box"
+                  Target="[#allinthebox.exe]"
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\All in the Box\All in the Box" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+    
+		<Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramMenuFolder">
+			  <Directory Id="ApplicationProgramsFolder" Name="All in the Box"/>
+		  </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop">
+        <Component Id="ApplicationDesktopShortcut" Guid="*">
+          <Shortcut Id="ApplicationDesktopShortcut"
+              Name="All in the Box"
+              Description="All in the Box Inventarisierungslösung"
+              Target="[INSTALLFOLDER]allinthebox.exe"
+              WorkingDirectory="INSTALLFOLDER"/>
+          <RemoveFolder Id="DesktopFolder" On="uninstall"/>
+          <RegistryValue
+              Root="HKCU"
+              Key="Software/All in the Box"
+              Name="installed"
+              Type="integer"
+              Value="1"
+              KeyPath="yes"/>
+        </Component>
+      </Directory>
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="All in the Box">
+				  <Directory Id="en" Name="en" />
+				  <Directory Id="Resources" Name="Resources">
+				    <Directory Id="Resources_HTML" Name="HTML" />
+				  </Directory>
+				  <Directory Id="de" Name="de" />
+				  <Directory Id="es" Name="es" />
+				  <Directory Id="fr" Name="fr" />
+          <Directory Id="Presets" Name="Presets" />
+        </Directory>
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<!-- <Component Id="ProductComponent"> -->
+				<!-- TODO: Insert files, registry keys, and other resources here. -->
+			<!-- </Component> -->
+			<Component Id="allinthebox.exe" Guid="f8c6ed48-345a-48eb-a2fe-3c45d0b8bc9e">
+			  <File Id="allinthebox.exe" Name="allinthebox.exe" Source="$(var.All in the Box_TargetDir)allinthebox.exe" />
+			</Component>
+			<Component Id="allinthebox.exe.config" Guid="5706d159-ec31-4363-8ae1-73e48636d0fb">
+			  <File Id="allinthebox.exe.config" Name="allinthebox.exe.config" Source="$(var.All in the Box_TargetDir)allinthebox.exe.config" />
+			</Component>
+			<Component Id="Design.dll" Guid="a6d64a4b-69b4-4456-9003-e9aa1496e7df">
+			  <File Id="Design.dll" Name="Design.dll" Source="$(var.All in the Box_TargetDir)Design.dll" />
+			</Component>
+			<Component Id="System.Net.Http.dll" Guid="92211c7a-575c-463c-a148-68afb4df8875">
+			  <File Id="System.Net.Http.dll" Name="System.Net.Http.dll" Source="$(var.All in the Box_TargetDir)System.Net.Http.dll" />
+			</Component>
+			<Component Id="TaskbarHook.dll" Guid="d9141f38-2de3-4938-9a88-e1d825dc34f0">
+			  <File Id="TaskbarHook.dll" Name="TaskbarHook.dll" Source="$(var.All in the Box_TargetDir)TaskbarHook.dll" />
+			</Component>
+			<Component Id="Transitions.dll" Guid="5890bccb-3e67-4bb6-9556-fc721b5ed813">
+			  <File Id="Transitions.dll" Name="Transitions.dll" Source="$(var.All in the Box_TargetDir)Transitions.dll" />
+			</Component>
+			<Component Id="HtmlAgilityPack.dll" Guid="d7b91c69-1d65-4f01-a4f5-00a61896d508">
+			  <File Id="HtmlAgilityPack.dll" Name="HtmlAgilityPack.dll" Source="$(var.All in the Box_TargetDir)HtmlAgilityPack.dll" />
+			</Component>
+			<Component Id="zxing.dll" Guid="6457e54a-3f6d-4fdc-93f1-10f9e91c947a">
+			  <File Id="zxing.dll" Name="zxing.dll" Source="$(var.All in the Box_TargetDir)zxing.dll" />
+			</Component>
+			<Component Id="Bunifu_UI_v1.52.dll" Guid="2fb3a388-fe17-471d-9085-36302ff44da5">
+			  <File Id="Bunifu_UI_v1.52.dll" Name="Bunifu_UI_v1.52.dll" Source="$(var.All in the Box_TargetDir)Bunifu_UI_v1.52.dll" />
+			</Component>
+			<Component Id="Xceed.Words.NET.dll" Guid="7da9ad76-2030-4989-bf4c-0454f7125e05">
+			  <File Id="Xceed.Words.NET.dll" Name="Xceed.Words.NET.dll" Source="$(var.All in the Box_TargetDir)Xceed.Words.NET.dll" />
+			</Component>
+			<Component Id="allinthebox.pdb" Guid="7b356565-6895-4d6d-b43d-22a7d23d5b2b">
+			  <File Id="allinthebox.pdb" Name="allinthebox.pdb" Source="$(var.All in the Box_TargetDir)allinthebox.pdb" />
+			</Component>
+			<Component Id="Design.pdb" Guid="8e9a37ac-bfa1-4727-be2d-f14deccd5355">
+			  <File Id="Design.pdb" Name="Design.pdb" Source="$(var.All in the Box_TargetDir)Design.pdb" />
+			</Component>
+			<Component Id="icon.ico" Guid="45d788d8-8f74-4c6f-8d30-794f572b2489">
+			  <File Id="icon.ico" Name="icon.ico" Source="$(var.All in the Box_TargetDir)icon.ico" />
+			</Component>
+			<Component Id="allinthebox.VisualElementsManifest.xml" Guid="*">
+        <File Id="allinthebox.VisualElementsManifest.xml" Name="allinthebox.VisualElementsManifest.xml" Source="$(var.All in the Box_TargetDir)allinthebox.VisualElementsManifest.xml" />
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="presets_files" Directory="Presets">
+      <Component Id="Settings.xml" Guid="*">
+        <File Id="Settings.xml" Name="Settings.xml" Source="$(var.All in the Box_TargetDir)Presets\Settings.xml" />
+      </Component>
+      <Component Id="StyleLight.xml" Guid="*">
+        <File Id="StyleLight.xml" Name="StyleLight.xml" Source="$(var.All in the Box_TargetDir)Presets\StyleLight.xml" />
+      </Component>
+      <Component Id="StyleDark.xml" Guid="*">
+        <File Id="StyleDark.xml" Name="StyleDark.xml" Source="$(var.All in the Box_TargetDir)Presets\StyleDark.xml" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  
+	<Fragment>
+	  <ComponentGroup Id="es_files" Directory="es">
+	    <Component Id="es_allinthebox.resources.dll" Guid="56cdc757-20ac-444d-8029-1f00a2af747f">
+	      <File Id="es_allinthebox.resources.dll" Name="allinthebox.resources.dll" Source="$(var.All in the Box_TargetDir)es\allinthebox.resources.dll" />
+	    </Component>
+	  </ComponentGroup>
+	</Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="fr_files" Directory="fr">
+      <Component Id="fr_allinthebox.resources.dll" Guid="410d2418-563f-4a5b-b907-c24e8e06ad2d">
+        <File Id="fr_allinthebox.resources.dll" Name="allinthebox.resources.dll" Source="$(var.All in the Box_TargetDir)fr\allinthebox.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="en_files" Directory="en">
+      <Component Id="en_allinthebox.resources.dll" Guid="9dca8e98-772e-4c45-94bf-b10945a3b1ae">
+        <File Id="en_allinthebox.resources.dll" Name="allinthebox.resources.dll" Source="$(var.All in the Box_TargetDir)en\allinthebox.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="de_files" Directory="de">
+      <Component Id="de_allinthebox.resources.dll" Guid="f543f20f-8abc-4a99-a155-1f3e7bd8b7d9">
+        <File Id="de_allinthebox.resources.dll" Name="allinthebox.resources.dll" Source="$(var.All in the Box_TargetDir)de\allinthebox.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+</Wix>

@@ -1,0 +1,431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{138C806D-898E-4815-B03B-B22D1454208F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>allinthebox</RootNamespace>
+    <AssemblyName>allinthebox</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>B80D8783047F7F271AF7491FEDBD3AADA724B034</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>All in the Box_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bunifu_UI_v1.52">
+      <HintPath>..\..\..\..\Desktop\Technik Ag Solution\Bunifu_UI_v1.52.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.8.14.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.14\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework">
+      <HintPath>..\..\DesignPlayground\DesignPlayground\bin\Debug\MetroFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Speech" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TaskbarHook, Version=1.2.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TaskBarHook.1.2.5\lib\net45\TaskbarHook.dll</HintPath>
+    </Reference>
+    <Reference Include="Transitions">
+      <HintPath>E:\Transitions.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Words.NET, Version=1.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocX.1.2.1\lib\Xceed.Words.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.4\lib\net461\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.4\lib\net461\zxing.presentation.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="add_user.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="add_user.Designer.cs">
+      <DependentUpon>add_user.cs</DependentUpon>
+    </Compile>
+    <Compile Include="add_view.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="add_view.Designer.cs">
+      <DependentUpon>add_view.cs</DependentUpon>
+    </Compile>
+    <Compile Include="backupManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="backupManager.Designer.cs">
+      <DependentUpon>backupManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\DataBaseManager.cs" />
+    <Compile Include="Core\FileManager.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RemoteServer.cs" />
+    <Compile Include="remote_view.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="remote_view.Designer.cs">
+      <DependentUpon>remote_view.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Security.cs" />
+    <Compile Include="Style.cs" />
+    <Compile Include="help.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="help.Designer.cs">
+      <DependentUpon>help.cs</DependentUpon>
+    </Compile>
+    <Compile Include="info_copy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="info_copy.Designer.cs">
+      <DependentUpon>info_copy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="loggerView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="loggerView.Designer.cs">
+      <DependentUpon>loggerView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="multiBorrow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="multiBorrow.Designer.cs">
+      <DependentUpon>multiBorrow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PictureHolder.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\strings.fr.Designer.cs">
+      <DependentUpon>strings.fr.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\strings.en.Designer.cs">
+      <DependentUpon>strings.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\strings.de.Designer.cs">
+      <DependentUpon>strings.de.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="rm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="rm.Designer.cs">
+      <DependentUpon>rm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="image_view.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="image_view.Designer.cs">
+      <DependentUpon>image_view.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HID_Listener.cs" />
+    <Compile Include="login_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="login_form.Designer.cs">
+      <DependentUpon>login_form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="settings.Designer.cs">
+      <DependentUpon>settings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="userManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="userManager.Designer.cs">
+      <DependentUpon>userManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="utils\usb.cs" />
+    <EmbeddedResource Include="add_user.resx">
+      <DependentUpon>add_user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="add_view.resx">
+      <DependentUpon>add_view.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="backupManager.resx">
+      <DependentUpon>backupManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="help.resx">
+      <DependentUpon>help.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="info_copy.resx">
+      <DependentUpon>info_copy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="loggerView.resx">
+      <DependentUpon>loggerView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="multiBorrow.resx">
+      <DependentUpon>multiBorrow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\strings.es.resx" />
+    <EmbeddedResource Include="Properties\strings.fr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\strings.en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\strings.de.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="remote_view.resx">
+      <DependentUpon>remote_view.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rm.resx">
+      <DependentUpon>rm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="image_view.resx">
+      <DependentUpon>image_view.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="login_form.resx">
+      <DependentUpon>login_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="settings.resx">
+      <DependentUpon>settings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="userManager.resx">
+      <DependentUpon>userManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="All in the Box_TemporaryKey.pfx" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reload-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\small_reload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SpeechLib">
+      <Guid>{C866CA3A-32F7-11D2-9602-00C04F8EE628}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>4</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\favicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\none.png" />
+    <None Include="Resources\unlock_black.png" />
+    <None Include="Resources\unlock_white.png" />
+    <None Include="Resources\world white.png" />
+    <None Include="Resources\world gray.png" />
+    <None Include="Resources\world black.png" />
+    <None Include="Resources\refresh_white.png" />
+    <None Include="Resources\refresh.png" />
+    <None Include="Resources\logo3.png" />
+    <None Include="Resources\Logo Square.png" />
+    <None Include="Resources\logo.png" />
+    <None Include="Resources\filter.png" />
+    <None Include="Resources\filter_stroke.png" />
+    <Content Include="logo.ico" />
+    <Content Include="Resources\HTML\LogoSquare.png" />
+    <None Include="Resources\Logo White.png" />
+    <None Include="Resources\lock_black.png" />
+    <None Include="Resources\lock_white.png" />
+    <None Include="Resources\i_black.png" />
+    <None Include="Resources\i_white.png" />
+    <None Include="Resources\logo.ico" />
+    <Content Include="Resources\logo1.png" />
+    <None Include="Resources\Logo2.png" />
+    <None Include="Resources\more.png" />
+    <None Include="Resources\red_cross.png" />
+    <None Include="Resources\uparrow.png" />
+    <None Include="Resources\ThumbTop.png" />
+    <None Include="Resources\ThumbSpanTop.png" />
+    <None Include="Resources\ThumbSpanBottom.png" />
+    <None Include="Resources\ThumbMiddle.png" />
+    <None Include="Resources\ThumbBottom.png" />
+    <None Include="Resources\ThumbSpanTopLight.png" />
+    <None Include="Resources\ThumbTopLight.png" />
+    <None Include="Resources\ThumbBottomLight.png" />
+    <None Include="Resources\ThumbSpanBottomLight.png" />
+    <None Include="Resources\ThumbMiddleLight.png" />
+    <None Include="Resources\uparrowLight.png" />
+    <None Include="Resources\search.png" />
+    <None Include="Resources\minimize_white.png" />
+    <None Include="Resources\minimize.png" />
+    <None Include="Resources\maximize_white.png" />
+    <None Include="Resources\maximize.png" />
+    <None Include="Resources\restore_white.png" />
+    <None Include="Resources\restore.png" />
+    <None Include="Resources\eye_grey.bmp" />
+    <None Include="Resources\eye_grey.png" />
+    <None Include="Resources\eye_white.png" />
+    <None Include="Resources\close.png" />
+    <None Include="Resources\close_white.png" />
+    <None Include="Resources\help.png" />
+    <None Include="Resources\help_black.png" />
+    <None Include="Resources\help_white.png" />
+    <None Include="Resources\circuitBoardBackground.png" />
+    <None Include="Resources\downarrowLight.png" />
+    <None Include="Resources\downarrow.png" />
+    <None Include="Resources\check.png" />
+    <None Include="bin\Debug\img\none.png" />
+    <Content Include="Resources\HTML\help.html" />
+    <None Include="Resources\settingsIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CustomControls\Design.csproj">
+      <Project>{5B85E2D7-2005-4496-B5D7-59C68A1EC91D}</Project>
+      <Name>Design</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

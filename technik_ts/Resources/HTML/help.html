@@ -1,0 +1,709 @@
+<html>
+<head>
+  <title> Help, "All in the Box" </title>
+  <style>
+    html, body{
+      font-family: 'Century Gothic', sans-serif;
+      font-size: 11pt;
+	  padding-top:20px;
+	  padding-bottom:50px;
+	  margin:0;
+    }
+    td{
+      padding-right: 150px;
+      padding-top: 15px;
+    }
+    #overview{
+      width: 100%;
+	  margin-left:0px;
+      height: 400px;
+      position: relative;
+      left: 0;
+      padding: 20px;
+      padding-bottom: 0px;
+      background-color:#c0c0c0;
+      margin-bottom: 10px;
+      margin-top: 30px;
+    }
+    #container{
+      float: left;
+	  position:relative;
+	  margin-left:20px;
+    }
+    h1{
+      position: absolute;
+      left: 70px;
+      top:0px;
+      font-weight: normal;
+      float: right;
+      margin:13px;
+    }
+    #image{
+      position:absolute;
+      left:10px;
+	  margin-left:20px;
+      display:block;
+      float:left;
+    }
+	#version{
+		margin-left:31px;
+		margin-top:30px;
+	}
+    a{
+        text-decoration: none;
+    }
+    a:visited{
+      color: #0060AA;
+    }
+    a:hover {
+      color: hsl(206,100,47);
+      background-color: rgba(255,255,255, .3);
+    }
+  </style>
+  <style type="text/css">
+    <!--
+    .tab { margin-left: 40px; }
+    -->
+</style>
+  </head>
+  <body>
+  <img src="LogoSquare.png" style="width:50px; height: 50px; margin-left;20px;" alt="Logo All in the Box" id="image">
+﻿<h1 style="font-size:26pt; color: #0060AA">
+    Hilfe
+</h1>
+<p id="version"></p>
+<div id="overview">
+<table style=" padding: 20px; padding-top:0px;">
+<tr> <td> <a href="#backupmanager"> Backupmanager </a> </td> <td> <a href="#nutzermanager"> Nutzermanager </a> </td>
+</tr>
+
+<tr> <td> <a href="#barcodescanner"> Barcodescanner </a> </td> <td> <a href="#regal"> Regalmanager </a> </td>
+</tr>
+
+<tr> <td> <a href="#farbe"> Farbe auswählen </a> </td> <td> <a href="#schnell"> Schnellauswahlbuttons </a> </td>
+</tr>
+
+<tr> <td> <a href="#fenster"> Fenstereinstellungen </a> </td>  <td> <a href="#rechts"> Seitenfenste(rechts) </a> </td>
+</tr>
+
+<tr> <td> <a href="#fuß"> Fußzeile </a> </td>  <td> <a href="#suche"> Suchfunktion </a> </td>
+</tr>
+<tr> <td> <a href="#hot"> Hotkeys </a> </td>  <td> <a href="#table"> Tabelle </a> </td>
+</tr>
+<tr> <td> <a href="#log">Log </a> </td> <td> <a href="#tabdes"> TabellenDesign </a> </td>
+</tr>
+<tr><td> <a href="#login"> Login </a> </td> <td> <a href="#tipps"> Tipps, Sprüche oder Witze </a> </td>
+</tr>
+<tr> <td> <a href="#multi"> MultiAuswahlTool </a> </td>
+</tr>
+</table>
+</div>
+<div id="container">
+<p style="font-size: 18pt; color: #0060AA" id="backupmanager"> Backupmanager
+</p>
+<br>
+<p style="font-size: 18pt; color: #0060AA" id="barcodescanner">
+    Barcodescanner
+</p>
+<p>
+    Mit dem Barcodescanner können die Items schnell gefunden werden. Es wird in
+    der Tabelle automatisch zum gescannten Item gescrollt und dessen Zeile
+    ausgewählt. In dem Seitenfenster rechts werden alle Informationen zu diesem
+    Item angezeigt.
+</p>
+<br>
+<p style="color: #0060AA">
+    Hinzufügen:
+</p>
+<p>
+    Wenn der gescannte Barcode noch nicht inventarisiert wurde, erscheint ein
+    Fenster, in dem man direkt Name des Items und die erste Zeile der
+    Bemerkungen notieren kann und das Item kann <a href="#hinzufügen"> hinzugefügt </a> werden.
+</p>
+<br>
+<p style="color: #0060AA">
+    Einstellungen Barcodescanner:
+</p>
+<p>
+    Diese Einstellungen müssen nur vor Erstnutzung und bei
+    Barcodescannerwechsel geändert werden.
+</p>
+<br>
+<p style="color: #0060AA">
+    Minimum Länge:
+</p>
+<p>
+    Dieser Wert gibt die minimale Anzahl an Zeichen im Barcode an.
+</p>
+<br>
+<p style="color: #0060AA">
+    Suffix Minimum:
+</p>
+<p>
+    Dies gibt an wie oft der Suffix vom Barcodescanner an den PC gesendet wird.
+</p>
+<br>
+<p style="color: #0060AA">
+    Suffix:
+</p>
+<p>
+    Der Suffix, der am Barcodescanner eingestellt wurde, muss in dem Feld neben
+    „Suffix“ ausgewählt werden.
+</p>
+<p>
+    <u>Diese Einstellungen können nur vom Admin geändert werden.</u>
+</p>
+<br>
+<p style="font-size: 18pt; color: #0060AA" id="farbe">
+    Farben auswählen
+</p>
+<p>
+    Um eine Farbe zu definiere, klickt man in den Einstellungen auf das in der
+    aktuellen Farbe eingefärbte Rechteck daneben. Die Farbe kann dann aus den
+    „Basic Colors“ ausgewählt werden, indem man auf die gewünschte Farbe klickt
+    oder man kann unter „Define Custom Color“ eine eigene Farbe definieren.
+    Dazu wählt man mit der Maus in dem großen Feld eine Farbe aus und kann auf
+    der Skala rechts die Helligkeit verstellen. Die ausgewählte Farbe wird in
+    dem Feld „Color|Solid“ angezeigt. Farben können auch über das HSL oder RGB
+    Schema definiert werden. Danach muss man die Auswahl über „Add to Custom
+    Colors“ bestätigen.
+</p>
+<br>
+<p style="font-size: 18pt; color: #0060AA"; id="fenster">
+    Fenstereinstellungen
+</p>
+<p>
+    Hier kann in den Einstellungen ausgewählt werden, in welcher Ebene sich
+    neue Fenster öffnen. Zudem kann man auswählen, dass jedes Fenster nur
+    einmal geöffnet werden kann.
+</p>
+<br>
+<p style="font-size: 18pt; color: #0060AA"; id="fuß">
+    Fußzeile
+</p>
+<p>
+    Neben dem Copyright steht durch Zahlen angegeben das wievielte Item gerade
+    ausgewählt ist und wie viele Items insgesamt inventarisiert wurden.
+</p>
+<br>
+<p style="color: #0060AA">
+    Einstellungen:
+</p>
+<p> In der rechten Ecke befindet sich ein Zahnradsymbol, bei dem man zu den
+    Einstellungen gelangen kann.
+</p>
+<br>
+<p style="font-size: 18pt; color: #0060AA"; id="hot">
+    HotKeys
+</p>
+<p>
+    In den Einstellungen kann man unter diesem Begriff Tastenkombinationen für
+    Kurzbefehle individuell festlegen. Um Hotkeys festzulegen, muss man auf das
+    Feld neben dem Befehl klicken und die Tasten/ Tastenkombinationen drücken,
+    die man festlegen will.
+</p>
+<br>
+<p style="color: #0060AA">
+    Version:
+</p>
+<p>
+    In einem Fenster wird angezeigt, welche Version vom Programm installiert
+    ist.
+</p>
+<br>
+<p style="color: #0060AA">
+  Zurücksetzen:
+</p>
+<p>
+    Unter „Hotkeys zurücksetzen“ können alle Hotkeys auf den Standard
+    zurückgesetzt werden.
+</p>
+<p>
+    <u>Diese Einstellungen können nur vom Admin geändert werden.</u>
+</p>
+<br>
+<p style="font-size: 18pt; color: #0060AA"; id="log"> Log </p>
+<br>
+<p style="font-size: 18pt; color: #0060AA"; id="login">
+    Login
+</p>
+<p style="color: #0060AA">
+    Anmelden mit Passwort:
+</p>
+<p>
+    Beim Login muss man Nutzername und Passwort eingeben. Beim Nutzername ist
+    die Groß und Kleinschreibung egal, beim Passwort nicht! Beide Felder müssen
+    ausgefüllt sein. Die Eingabe kann auf der „Einloggen“ Schaltfläche oder mit
+    Enter bestätigt werden. Das Passwort kann durch fahren der Maus über das
+    Auge sichtbar gemacht werden.
+</p>
+<br>
+<p style="color: #0060AA" id="usb-authen">
+    Anmelden mit USB Authentifikation:
+</p>
+<p>
+    Ein zuvor hinzugefügter USB-Stick kann vor dem Programmstart oder während
+    des Logins einstecken werden und kann nach der Authentifizierung wieder
+    entfernt werden. Wenn der Stick umbenannt wurde muss er neu hinzugefügt
+    werden!
+</p>
+<br>
+<p style="color: #0060AA">
+    Nutzer verwalten:
+</p>
+<p>
+    siehe <a href="#nutzermanager">hier</a>
+</p>
+<br>
+<p style="color: #0060AA">
+    Verlassen:
+</p>
+<p>
+    Durch Klicken auf das „x“ oder die „Verlassen“ Schaltfläche wird das
+    Programm vor dem „richtigen“ Öffnen geschlossen.
+</p>
+<p>
+    Das nicht korrekte Laden der Anmeldeoberfläche kann damit zusammenhängen,
+    dass die Internetverbindung vorhanden, aber sehr schwach ist oder damit,
+    dass die Log.xml Datei zu groß ist.
+</p>
+<br>
+<p style="font-size: 18pt; color: #0060AA" id="multi">
+    MultiAuswahlTool
+</p>
+<p>
+    Hiermit können mehrere Items auf einmal ausgeliehen oder zurückgegeben
+    werden. Dazu kann man den Barcode der einzelnen Items scannen und nach
+    jedem Barcode Pfeil-nach-unten drücken. Der Name des gescannten Items wird
+    angezeigt, sobald die Pfeiltaste gedrückt wurde. Danach kann man über die
+    Buttons links alle Items der Liste ausleihen bzw. zurückgeben. Ein kleiner
+    Stern * am Anfang der Zeile zeigt an, dass diese als nächstes bearbeitet
+    werden soll, ein Pfeil zeigt an welche Zeile ausgewählt ist.
+</p>
+<br>
+<p style="color: #0060AA">
+    Datei speichern:
+</p>
+<p>
+    Über die Abfrage beim Ausleihen oder über „Als Dokument speichern“ kann man
+    die Liste als Word oder Exceldatei speichern, wobei der Vorgang bei
+    Exceldateien etwas länger dauert. In dem Dokument steht das Datum, an dem
+    die Liste erstellt wurde und der Name des Nutzers, der gerade angemeldet
+    war. In der Tabelle stehen Name, Barcode und Bemerkungen zum Item und es
+    gibt eine Spalte in der abgehakt werden kann, dass man das Item wieder
+    eingepackt hat.
+</p>
+<br>
+<p style="color: #0060AA">
+    Zurücksetzen:
+</p>
+<p>
+    Über diesem Button werden alle Items aus der Liste entfernt.
+</p>
+<br>
+<p style="font-size: 18pt; color: #0060AA" id="nutzermanager">
+    Nutzermanager
+</p>
+<p>
+    Hier kann der Admin die Nutzer verwalten. In der rechten Spalte stehen die
+    Namen aller gespeicherten Nutzer. Wenn ein Name ausgewählt wird, werden
+    alle Informationen über den Nutzer angezeigt. Ein neues Passwort kann in
+    dem entsprechenden Feld festgelegt werden. Der Name kann nicht geändert
+    werden. Es muss stattdessen ein neuer Nutzer hinzugefügt werden.
+</p>
+<br>
+<p style="color: #0060AA">
+    USB-Stick:
+</p>
+<p>
+    Es kann ein USB-
+    Stick für das Automatische Anmelden ausgewählt werden. Dazu muss man den
+    Stick in den PC stecken und dann den Nutzermanager öffnen. Der Stick kann
+    dann im dritten Feld von oben ausgewählt werden. Beim Starten des Programms
+    kann man sich dann <a href="#usb-authen">Anmelden mit USB-Authentifikation</a>. Die Änderungen
+    müssen gespeichert werden.
+</p>
+<br>
+<p style="color: #0060AA">
+    Admin/Nutzer:
+</p>
+<p>
+    Es kann ausgewählt werden, ob der Nutzer Admin oder normaler Nutzer ist.
+    Die Änderungen müssen gespeichert werden.
+</p>
+<br>
+<p style="color: #0060AA">
+    Löschen:
+</p>
+<p>
+    Unter Löschen wird der Nutzer unwiderruflich gelöscht. Dies kann durch ein
+    <a href="#backupmanager"> Backup </a> rückgängig gemacht werden.
+</p>
+<br>
+<p style="color: #0060AA">
+    Neuer Nutzer:
+</p>
+<p>
+    Hiermit kann ein neuer Nutzer hinzugefügt werden. Der Name erscheint in der
+    Liste der Nutzer und kann dort ausgewählt und bearbeitet werden.
+</p>
+<p>
+    <u>Diese Einstellungen können nur vom Admin geändert werden.</u>
+</p>
+<br>
+<p style="font-size: 18pt; color: #0060AA"; id="regal"> Regalmanager
+</p>
+<br>
+<p style="font-size: 18pt; color: #0060AA"; id="schnell">
+    Schnellauswahlbuttons
+</p>
+<p>
+    Die Schnellauswahlbuttons befinden sich unterhalb der Tabelle.
+</p>
+<br>
+<p style="color: #0060AA">
+    Aktualisieren:
+</p>
+<p>
+    Wenn manuell die Data.xml Datei bearbeitet wurde, muss die Datei
+    aktualisiert werden.
+</p>
+<br>
+<p style="color: #0060AA" id="hinzufügen">
+    Hinzufügen:
+</p>
+<p>
+    Es erscheint ein Fenster, in dem man Barcode, Name und die erste Zeile der
+    Bemerkungen notieren kann. Der Barcode kann mit dem <a href="#barcodescanner">Barcodescanner </a>
+    gescannt oder manuell eingegeben werden. Nach dem Hinzufügen wird das Item
+    direkt ausgewählt und das Seitenfenster zeigt alle Informationen zum Item,
+    die nun bearbeitet und ergänzt werden können.
+</p>
+<br>
+<p style="color: #0060AA">
+    Löschen:
+</p>
+<p>
+    Die ausgewählte Zeile wird unwiderruflich gelöscht, nachdem dies nochmals
+    bestätigt wurde. Durch ein <a href="#backupmanager"> Backup</a> kann dies rückgängig gemacht
+    werden.
+</p>
+<br>
+<p style="color: #0060AA">
+    Ausleihen/ Zurückgeben:
+</p>
+<p>
+    Der Status des Ausgewählten Objekts wird geändert.
+    <br/>
+    Entliehen &#8594; Verfügbar
+    <br/>
+    Verfügbar &#8594; Entliehen
+    <br/>
+    Die Items werden immer auf den gerade eingeloggten Nutzer entliehen.
+    <br/>
+    Mehrere Items können über das <a href="#multi">MuliAuswahlTool </a>ausgeliehen werden.
+</p>
+<br>
+<p style="font-size: 18pt; color: #0060AA"; id="rechts">
+    Seitenfenster (rechts)
+</p>
+<p>
+    Hier befinden sich alle Informationen über das gerade aufgerufene Item.
+</p>
+<br>
+<p style="color: #0060AA">
+    Barcode:
+</p>
+<p>
+    Unter dem Namen steht der Barcode, der nicht verändert werden kann. Ist
+    dies nötig, muss das Item neu inventarisiert werden.
+</p>
+<br>
+<p style="color: #0060AA">
+    Name:
+</p>
+<p>
+    In dem Eingabefeld darunter kann der Name, unter dem das Item gefunden
+    werden kann, geändert werden. Die Änderung muss über den Speicherbutton
+    gespeichert werden.
+</p>
+<br>
+<p style="color: #0060AA">
+    Ausleihen/ Zurückgeben:
+</p>
+<p>
+    Durch Anklicken der kreisförmigen Buttons kann der Status des Items
+    geändert werden. Wenn es entliehen ist, steht dort welcher Nutzer dieses
+    gerade entliehen hat.
+</p>
+<br>
+<p style="color: #0060AA">
+    Bemerkung:
+</p>
+<p>
+    Hier können Informationen über das Item gespeichert werden. Dabei wird nur
+    die erste Zeile in der Tabelle angezeigt und nur diese kann über die
+    <a href="#suche">Suchfunktion </a> gefunden werden. Ein „?“ zeigt in der Tabelle an, dass noch
+    weitere Bemerkungen vorhanden sind. Mit Enter wird eine neue Zeile
+    gestartet und diese sind auf 100 Stück begrenzt. Mit der Scrollbar oder den
+    Pfeilen kann man zu den weiteren Zeilen gelangen, wenn mehr als 8 vorhanden
+    sind.
+</p>
+<p>
+    Um Sachen hervorzuheben, können Sie folgende Tastenkombinationen nutzen:
+    <br/>
+    Ctrl + Shift + F &#8594;<strong> dick gedruckt</strong>
+    <br/>
+    Ctrl + Shift + K &#8594; <em>kursiv</em>
+    <br/>
+    Ctrl + Shift + D &#8594;
+    <s>
+        durchgestrichen
+        <br/>
+    </s>
+    Ctrl + Shift + U &#8594;
+    <u>
+        unterstrichen
+        <br/>
+    </u>
+    Tab &#8594; · Liste
+    <br/>
+    Ctrl + Shift + G &#8594; grün
+    <br/>
+    Ctrl + Shift + B &#8594; blau
+    <br/>
+    Ctrl + Shift + R &#8594; rot
+    <br/>
+    Ctrl + Shift + S &#8594; schwarz
+</p>
+<br>
+<p style="color: #0060AA">
+    Speichern:
+</p>
+<p>
+    Mit diesem Button müssen Änderungen am Namen oder in den Bemerkungen
+    gespeichert werden. Wenn ein grüner Haken vor dem Wort „Speichern“ steht,
+    sind alle Änderungen gespeichert, wenn dort ein rotes Kreuz steht, sind die
+    Änderungen noch nicht gespeichert.
+</p>
+<br>
+<p style="color: #0060AA">
+    Löschen:
+</p>
+<p>
+    Dieser Button löscht das Item mit allen Informationen unwiderruflich aus
+    dem Programm, nachdem dies erneut bestätigt wurde. Die Daten können über
+    das <a href="backupmanager"> Backup </a> wiederhergestellt werden.
+</p>
+<br>
+<p style="color: #0060AA">
+    Regal:
+</p>
+<p>
+    In diesem Eingabefeld kann ausgewählt werden, wo das Item aufbewahrt wird.
+    Dies wird über den <u>Regalmanager</u> koordiniert.<u></u>
+</p>
+<br>
+<p style="color: #0060AA">
+    Bewertung:
+</p>
+<p>
+    Hier können die Items mit Sternen von 1-5 bewertet werden, um den Zustand
+    darzustellen.
+</p>
+<br>
+<p style="color: #0060AA">
+    Fotos:
+</p>
+<br>
+<p style="font-size: 18pt; color: #0060AA" id="suche">
+    Suchfunktion
+</p>
+<p style="color: #0060AA">
+    Suche nach Barcode:
+</p>
+<p>
+    Man muss den Suchbegriff in das Suchfeld links eingeben und danach auf die
+    Lupe klicken. Es wird nach einem Barcode gesucht, der den Suchbegriff
+    enthält. Man kann in den Einstellungen „exakte Barcodesucht“ aktivieren,
+    sodass die Suche nur noch ein Ergebnis, welches direkt ausgewählt wird,
+    liefert.
+</p>
+<br>
+<p style="color: #0060AA">
+    Suche nach Name:
+</p>
+<p>
+    Wenn man den Suchbegriff in das Suchfeld eingibt, werden alle
+    Items markiert, deren Name den Suchbegriff enthält. Die Anzahl der Treffer
+    steht unter dem Suchfeld.
+</p>
+<br>
+<p style="color: #0060AA">
+    Suche nach Bemerkungen:
+</p>
+<p>
+    Wenn man den Suchbegriff in das Suchfeld eingibt, werden alle
+    Items markiert, deren Bemerkung in der ersten Zeile den Suchbegriff
+    enthalten. Die Anzahl der Treffer steht unter dem Suchfeld.
+</p>
+<br>
+<p style="color: #0060AA">
+    Suche zurücksetzen:
+</p>
+<p>
+    Sobald ein Suchbegriff eingetippt wird, erscheint ein „x“, mit welchem die
+    Suche und alle Markierungen zurückgesetzt werden können.
+</p>
+<br>
+<p style="color: #0060AA">
+    Standardsuchmodus bei Start:
+</p>
+<p>
+    In den Einstellungen kann unter „Sucheinstellungen“ der „Suchstandard“
+    festgelegt werden. Dieser Modus wird beim Start automatisch ausgewählt.
+</p>
+<br>
+<p style="color: #0060AA">
+    Markierungsfarben wählen:
+</p>
+<p>
+    In den Einstellungen kann eine Farbe ausgewählt werden, in der alle
+    gefundenen Items markiert werden. Diese kann <a href="#farbe">so</a> ausgewählt werden.
+</p>
+<br>
+<p style="color: #0060AA">
+    Weitere Sucheinstellungen:
+</p>
+<p>
+    Damit bereits während des Tippens des Suchbegriffes gesucht und markiert
+    wird, kann in den Einstellungspunkt „Suchen während Tippen“ aktiviert
+    werden. Damit automatisch zum ersten gefundenen Ergebnis gescrollt wird,
+    muss der Einstellungspunktpunkt „Zum ersten Ergebnis scrollen“ ausgewählt
+    werden.
+</p>
+<br>
+<p style="font-size: 18pt; color: #0060AA"; id="table">
+    Tabelle
+</p>
+<p>
+    In der Tabelle werden alle gewünschten Informationen über die einzelnen
+    Items angezeigt. Jede Zeile zeigt die Informationen eines Items.
+    <br/>
+    In den Einstellungen kann unter „Tabellenansicht“ ausgewählt werden, welche
+    Kategorien in den Spalten angezeigt werden sollen. Die Reihenfolge der
+    Kategorien kann geändert werden, indem man auf das Feld klickt, die
+    Maustaste gedrückt hält und das Feld an die Stelle zieht, an der man es
+    haben will. Die Stelle, an die das Feld verschoben wird, wird durch einen
+    blauen Strich gekennzeichnet.
+</p>
+<br>
+<p style="color: #0060AA">
+    Sortieren:
+</p>
+<p>
+    Wenn man auf das Feld einer Kategorie klickt, wird die Liste nach diesem
+    Kriterium sortiert. Bei erneutem Anklicken ist die Reihenfolge absteigend.
+    Ob die Liste auf- oder absteigend sortiert wurde, wird durch den kleinen
+    Pfeil an der rechten Seite des Feldes symbolisiert. Wenn an keinem der
+    Felder dieses Symbol steht, werden die Items in der Reihenfolge, in der sie
+    hinzugefügt wurden, gelistet.
+</p>
+<br>
+<p style="color: #0060AA">
+    Rechtsklick:
+</p>
+<p class="tab">
+  <br>
+  <strong> Aktualisieren: </strong>
+</p>
+<p class="tab">
+    Wenn manuell die Data.xml Datei bearbeitet wurde, muss die Datei
+    aktualisiert werden.
+</p>
+<p class="tab">
+<strong> Hinzufügen: </strong>
+</p>
+<p class="tab">
+    siehe <a href="#hinzufügen">hier</a>
+</p>
+<p class="tab">
+<strong> Löschen: </strong>
+</p>
+<p class="tab">
+    Die ausgewählte Zeile wird unwiderruflich gelöscht, nachdem dies nochmals
+    bestätigt wurde. Durch ein <a href="backupmanager">Backup</a> kann dies rückgängig gemacht
+    werden.
+</p>
+<p class="tab">
+    <strong>Zeile Statusänderung: </strong>
+</p>
+<p class="tab">
+    Der Status des Ausgewählten Objekts wird geändert.
+    <br/>
+    Entliehen &#8594; Verfügbar
+    <br/>
+    Verfügbar &#8594; Entliehen
+    <br/>
+    Die Items werden immer auf den gerade eingeloggten Nutzer entliehen.
+    <br/>
+    Mehrere Items können über das <a href="#multi">MuliAuswahlTool </a>ausgeliehen werden.
+</p>
+<br>
+<p style="font-size: 18pt; color: #0060AA"; id="tabdes">
+    TabellenDesign
+</p>
+<p>
+    In den Einstellungen kann man unter diesem Namen das Design der Tabelle
+    individuell anpassen. Die Primärfarbe ist die Farbe jeder zweiten Zeile,
+    die Sekundärfarbe die der anderen. Zudem kann auch die „Auswahlfarbe“
+    festgelegt werden, die das gerade ausgewählte Item hat. Wie Sie die Farben
+    ändern können sehen Sie <a href="#farbe">hier</a>.
+</p>
+<br>
+<p style="color: #0060AA">
+    Schriftgröße:
+</p>
+<p>
+    Die Schriftgröße kann geändert werden, indem man den Schieberegler
+    verschiebt oder rechts bzw. links neben den Regler auf den Balken klickt,
+    um die Schrift um eine Einheit größer bzw. kleiner zu machen.
+</p>
+<br>
+<p style="color: #0060AA">
+    Entliehene Items hervorheben:
+</p>
+<p>
+    Um entliehene Items besser hervorzuheben, kann man diese zum einen kursiv
+    anzeigen lassen, indem man entsprechendes Feld auswählt. Außerdem können
+    entliehene Items farblich hervorgehoben werden, wenn man „Entliehenes
+    hervorheben“ aktiviert. Zudem kann man die Farbe eines entliehenen Items,
+    welches ausgewählt wird unter „Entliehenes Auswahlfarbe“ festlegen.
+</p>
+<br>
+<p style="color: #0060AA">
+  Schriftart:
+</p>
+<p>
+    Hier kann eine Schriftart ausgewählt werden.
+</p>
+<br>
+<p style="font-size: 18pt; color: #0060AA"; id="tipps">
+    Tipps, Sprüche oder Witze
+</p>
+<p>
+    In der Sidebar auf der linken Seite stehen im unteren Bereich tägliche
+    Sprüche. Diese werden einer .csv Datei entnommen, also um eine
+    comma-separated values Datei.
+    <br/>
+    Die Dateien werden in einer zufälligen Reihenfolge geladen. Mit Linksklick
+    wird die nächste geladen, mit Rechtsklick die vorherige. Dies erfolgt in
+    Dauerschleife, wobei bei der Wiederholung die Dateien in der gleichen
+    Reihenfolge geladen werden. Bei erneutem Öffnen der App wird eine andere
+    Reihenfolge generiert. Wenn die .csv Datei in einem Texteditor (z.B.
+    Notepad++) aufgerufen wird, kann diese bearbeitet werden. Jede Zeile ist
+    ein Spruch und das Zeilenende wird durch „|“ (Alt Gr + &gt;) markiert.
+</p>
+</div>
+</body>
+</html>

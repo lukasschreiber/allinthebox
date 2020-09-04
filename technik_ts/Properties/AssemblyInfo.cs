@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("technik_ts")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("All in the Box")]
+[assembly: AssemblyDescription("Inventarisierungsprogramm")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("technik_ts")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("Lukas Schreiber")]
+[assembly: AssemblyProduct("All in the Box")]
+[assembly: AssemblyCopyright("Copyright © 2017-2019")]
+[assembly: AssemblyTrademark("Polymation")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.8.2.*")]
+[assembly: AssemblyFileVersion("1.8.2.0")]

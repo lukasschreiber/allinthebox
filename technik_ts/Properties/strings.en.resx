@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="addButton" xml:space="preserve">
+    <value>Add User</value>
+  </data>
+  <data name="admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="allFilesType" xml:space="preserve">
+    <value>All files</value>
+  </data>
+  <data name="annually" xml:space="preserve">
+    <value>annually</value>
+  </data>
+  <data name="atNextStart" xml:space="preserve">
+    <value>at the next start</value>
+  </data>
+  <data name="autoBackup" xml:space="preserve">
+    <value>AutoBackup</value>
+  </data>
+  <data name="available" xml:space="preserve">
+    <value>available</value>
+  </data>
+  <data name="back" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="backup" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="BackupManager" xml:space="preserve">
+    <value>BackupManager</value>
+  </data>
+  <data name="backupManually" xml:space="preserve">
+    <value>Backup Manually</value>
+  </data>
+  <data name="barcode" xml:space="preserve">
+    <value>Barcode</value>
+  </data>
+  <data name="barcodeColor" xml:space="preserve">
+    <value>Barcode Color</value>
+  </data>
+  <data name="borrow" xml:space="preserve">
+    <value>Borrow</value>
+  </data>
+  <data name="borrowed" xml:space="preserve">
+    <value>borrowed</value>
+  </data>
+  <data name="borrowedItalic" xml:space="preserve">
+    <value>Borrowed Items italic</value>
+  </data>
+  <data name="borrowedMarked" xml:space="preserve">
+    <value>Highlight Borrowed Items</value>
+  </data>
+  <data name="borrowMarkedSelectedColor" xml:space="preserve">
+    <value>Borrowed Highlightcolor</value>
+  </data>
+  <data name="by" xml:space="preserve">
+    <value>by</value>
+    <comment>entliehen von Lukas</comment>
+  </data>
+  <data name="choosePreset" xml:space="preserve">
+    <value>Choose Preset</value>
+  </data>
+  <data name="close" xml:space="preserve">
+    <value>close</value>
+  </data>
+  <data name="comment" xml:space="preserve">
+    <value>Remark</value>
+  </data>
+  <data name="commentColor" xml:space="preserve">
+    <value>Remark Color</value>
+  </data>
+  <data name="daily" xml:space="preserve">
+    <value>daily</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="deleteError" xml:space="preserve">
+    <value>Do you really want to delete all error entries?</value>
+  </data>
+  <data name="deleteLine" xml:space="preserve">
+    <value>Do you really want to delete the line?</value>
+  </data>
+  <data name="deleteLog" xml:space="preserve">
+    <value>Do you really want to delete all log entries?</value>
+  </data>
+  <data name="doc" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="doku" xml:space="preserve">
+    <value>#del</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="errorCredentialsWrong" xml:space="preserve">
+    <value>Password or username aren't correct...</value>
+  </data>
+  <data name="errorDeleted" xml:space="preserve">
+    <value>Deleted Errors</value>
+  </data>
+  <data name="errorEmpty" xml:space="preserve">
+    <value>Please provide a password and username...</value>
+  </data>
+  <data name="errorLog" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="exactBarcode" xml:space="preserve">
+    <value>search exact codes</value>
+  </data>
+  <data name="excel" xml:space="preserve">
+    <value>Excel table</value>
+    <comment>bsp.: Ausliehliste von Lukas erstellt am 30.10.2019</comment>
+  </data>
+  <data name="exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="file" xml:space="preserve">
+    <value>File</value>
+    <comment>Datei "test" wurde erfolgreich gespeichert</comment>
+  </data>
+  <data name="fileAlreadyExists" xml:space="preserve">
+    <value>A file with the provided name already exists!</value>
+  </data>
+  <data name="fileCreated" xml:space="preserve">
+    <value>File Created.</value>
+  </data>
+  <data name="fileSavedSentence_2" xml:space="preserve">
+    <value>has been saved.</value>
+  </data>
+  <data name="fontColor" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="fontSize" xml:space="preserve">
+    <value>Fontsize</value>
+  </data>
+  <data name="found" xml:space="preserve">
+    <value>found</value>
+  </data>
+  <data name="help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="hotKeys" xml:space="preserve">
+    <value>HotKeys</value>
+  </data>
+  <data name="imageFiles" xml:space="preserve">
+    <value>Image Files</value>
+  </data>
+  <data name="imageOnTop" xml:space="preserve">
+    <value>Imageview top most</value>
+  </data>
+  <data name="infotext" xml:space="preserve">
+    <value>All rights to this program are owned by Lukas Schreiber | Polymation. The duplication of the program as well as the selling of this license is denied. Additional licenses can be purchased on the Patreon page of the program. Many thanks to Miriam Janßen for the support and inspiration for this program, as well as to Mathis Kaiser for the French translation.</value>
+  </data>
+  <data name="itemAddButton" xml:space="preserve">
+    <value>Add Item</value>
+  </data>
+  <data name="itemAddErrorEmpty" xml:space="preserve">
+    <value>Both the Barcode and Name fields can not be empty.</value>
+  </data>
+  <data name="joke" xml:space="preserve">
+    <value>This is a joke (-:</value>
+  </data>
+  <data name="lastBackup" xml:space="preserve">
+    <value>Last Backup</value>
+  </data>
+  <data name="linkedIn" xml:space="preserve">
+    <value>Lukas Schreiber on LinkedIn</value>
+  </data>
+  <data name="list" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="listSentence_1" xml:space="preserve">
+    <value>List by</value>
+  </data>
+  <data name="listSentence_2" xml:space="preserve">
+    <value>created on</value>
+  </data>
+  <data name="loadPreset" xml:space="preserve">
+    <value>Load Preset</value>
+  </data>
+  <data name="log" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="logDeleted" xml:space="preserve">
+    <value>Log deleted</value>
+  </data>
+  <data name="loggedInAs" xml:space="preserve">
+    <value>Logged in as</value>
+    <comment>Angemeldet als Lukas</comment>
+  </data>
+  <data name="logger" xml:space="preserve">
+    <value>Logger</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="menuBorrow" xml:space="preserve">
+    <value>Line status change</value>
+  </data>
+  <data name="menuDeleteRow" xml:space="preserve">
+    <value>Delete Row</value>
+  </data>
+  <data name="minLength" xml:space="preserve">
+    <value>Minimum Length</value>
+  </data>
+  <data name="monthly" xml:space="preserve">
+    <value>monthly</value>
+  </data>
+  <data name="MultiAuswahlTool" xml:space="preserve">
+    <value>MultiSelectTool</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="nameColor" xml:space="preserve">
+    <value>Name Color</value>
+  </data>
+  <data name="namingViolation" xml:space="preserve">
+    <value>A user with the provided Name already exists.</value>
+  </data>
+  <data name="never" xml:space="preserve">
+    <value>never</value>
+  </data>
+  <data name="newUser" xml:space="preserve">
+    <value>Create User</value>
+  </data>
+  <data name="nextBackup" xml:space="preserve">
+    <value>Next Backup</value>
+  </data>
+  <data name="noItem" xml:space="preserve">
+    <value>No Item Selected</value>
+  </data>
+  <data name="noResults" xml:space="preserve">
+    <value>No Results</value>
+  </data>
+  <data name="noRowSelected" xml:space="preserve">
+    <value>No Row Selected</value>
+  </data>
+  <data name="noteScanner" xml:space="preserve">
+    <value>Only modify when using a new Scanner!</value>
+  </data>
+  <data name="nothingSelected" xml:space="preserve">
+    <value>Nothing Selected</value>
+  </data>
+  <data name="notLoggedIn" xml:space="preserve">
+    <value>Not Logged in</value>
+  </data>
+  <data name="noUsb" xml:space="preserve">
+    <value>No USB drive</value>
+  </data>
+  <data name="of" xml:space="preserve">
+    <value>of</value>
+    <comment>2 von 5</comment>
+  </data>
+  <data name="openOnce" xml:space="preserve">
+    <value>Open Windows once</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="passwordAndUserFilled" xml:space="preserve">
+    <value>Password and username need to be set!</value>
+  </data>
+  <data name="picture" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="preset" xml:space="preserve">
+    <value>Empty Preset</value>
+  </data>
+  <data name="presetType" xml:space="preserve">
+    <value>Preset</value>
+  </data>
+  <data name="primeColor" xml:space="preserve">
+    <value>primary Color</value>
+  </data>
+  <data name="rate" xml:space="preserve">
+    <value>Rating</value>
+  </data>
+  <data name="refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="refreshedFile" xml:space="preserve">
+    <value>File refreshed.</value>
+  </data>
+  <data name="regal" xml:space="preserve">
+    <value>Rack</value>
+  </data>
+  <data name="regalDelete" xml:space="preserve">
+    <value>Do you really want to delete this rack?</value>
+  </data>
+  <data name="regalfach" xml:space="preserve">
+    <value>Rack</value>
+  </data>
+  <data name="regalmanager" xml:space="preserve">
+    <value>Rackmanager</value>
+  </data>
+  <data name="regalManagerDescribe" xml:space="preserve">
+    <value>To assign the racks, you can edit them on the left and move freely around the picture. The background image can be created in Paint, for example. Simply save the template.</value>
+  </data>
+  <data name="reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="resetHotkeys" xml:space="preserve">
+    <value>Reset to origin</value>
+  </data>
+  <data name="restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="restoreOk" xml:space="preserve">
+    <value>Restored from Backup.</value>
+  </data>
+  <data name="rmOnTop" xml:space="preserve">
+    <value>Rackmanager top most</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="saveAsDoc" xml:space="preserve">
+    <value>Save as Document</value>
+  </data>
+  <data name="savePreset" xml:space="preserve">
+    <value>Save Preset</value>
+  </data>
+  <data name="saveQuestion" xml:space="preserve">
+    <value>Ask to save</value>
+    <comment>als überschrift für "wantToSave"</comment>
+  </data>
+  <data name="scanner" xml:space="preserve">
+    <value>Barcode Scanner</value>
+  </data>
+  <data name="scrollToFirst" xml:space="preserve">
+    <value>Scroll to first Result</value>
+  </data>
+  <data name="searchBarcode" xml:space="preserve">
+    <value>Search Barcodes</value>
+  </data>
+  <data name="searchComments" xml:space="preserve">
+    <value>Search Remarks</value>
+  </data>
+  <data name="searchNames" xml:space="preserve">
+    <value>Search Names</value>
+  </data>
+  <data name="searchSettings" xml:space="preserve">
+    <value>Search Settings</value>
+  </data>
+  <data name="searchStandard" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="searchWhileTyping" xml:space="preserve">
+    <value>search while typing</value>
+  </data>
+  <data name="secondColor" xml:space="preserve">
+    <value>secondary Color</value>
+  </data>
+  <data name="selectColor" xml:space="preserve">
+    <value>select Color</value>
+  </data>
+  <data name="selectOnTop" xml:space="preserve">
+    <value>MultiSelectTool top most</value>
+  </data>
+  <data name="settingsOnTop" xml:space="preserve">
+    <value>Settings top most</value>
+  </data>
+  <data name="shift" xml:space="preserve">
+    <value>shift</value>
+  </data>
+  <data name="state" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="suffix" xml:space="preserve">
+    <value>Suffix</value>
+  </data>
+  <data name="suffixSendMin" xml:space="preserve">
+    <value>Suffix Minimum</value>
+  </data>
+  <data name="system" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="systemClose" xml:space="preserve">
+    <value>System Closing</value>
+  </data>
+  <data name="tableDesign" xml:space="preserve">
+    <value>Table Design</value>
+  </data>
+  <data name="tableView" xml:space="preserve">
+    <value>Table View</value>
+  </data>
+  <data name="tick" xml:space="preserve">
+    <value>check mark</value>
+  </data>
+  <data name="timeFormat" xml:space="preserve">
+    <value />
+    <comment>z.B. 9:30 Uhr</comment>
+  </data>
+  <data name="user" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="userManager" xml:space="preserve">
+    <value>Usermanager</value>
+  </data>
+  <data name="username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="useUSB" xml:space="preserve">
+    <value>alternatively use USB key ...</value>
+  </data>
+  <data name="version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="wantToSave" xml:space="preserve">
+    <value>Do you want to save the list as a file?</value>
+  </data>
+  <data name="weekly" xml:space="preserve">
+    <value>weekly</value>
+  </data>
+  <data name="windowMaximize" xml:space="preserve">
+    <value>Maximize</value>
+  </data>
+  <data name="windowMinimize" xml:space="preserve">
+    <value>Minimize</value>
+  </data>
+  <data name="windowNormal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="windowSerttings" xml:space="preserve">
+    <value>Window Settings</value>
+  </data>
+</root>
