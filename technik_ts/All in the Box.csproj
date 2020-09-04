@@ -409,12 +409,6 @@
     <None Include="Resources\settingsIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CustomControls\Design.csproj">
-      <Project>{5B85E2D7-2005-4496-B5D7-59C68A1EC91D}</Project>
-      <Name>Design</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
@@ -426,6 +420,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Design\Design.csproj">
+      <Project>{5b85e2d7-2005-4496-b5d7-59c68a1ec91d}</Project>
+      <Name>Design</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
