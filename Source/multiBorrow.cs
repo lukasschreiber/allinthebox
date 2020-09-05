@@ -1,74 +1,82 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using allinthebox.Properties;
+using Microsoft.Office.Interop.Excel;
 using Xceed.Words.NET;
+using Application = Microsoft.Office.Interop.Excel.Application;
+using Border = Xceed.Words.NET.Border;
+using Font = Xceed.Words.NET.Font;
+using Formatting = Xceed.Words.NET.Formatting;
 
 namespace allinthebox
 {
     public partial class multiBorrow : Form
     {
-        XmlDocument doc;
-        Main main;
-        int iconStyle = 1;
+        private readonly XmlDocument doc;
+        private int grabX, grabY;
+        private readonly int iconStyle = 1;
+        private readonly Main main;
+        private bool mousedown, maximized;
+
+        private int mouseX, mouseY;
 
         public multiBorrow(Main m)
         {
             InitializeComponent();
 
             //language
-            this.label2.Text = Properties.strings.MultiAuswahlTool;
-            this.borrow.Text = Properties.strings.borrow;
-            this.back.Text = Properties.strings.back;
-            this.saveToWord.Text = Properties.strings.saveAsDoc;
-            this.reset.Text = Properties.strings.reset;
-            this.dataGridView1.Columns["names"].HeaderText = Properties.strings.name;
-            this.dataGridView1.Columns["barcode"].HeaderText = Properties.strings.barcode;
+            label2.Text = strings.MultiAuswahlTool;
+            borrow.Text = strings.borrow;
+            back.Text = strings.back;
+            saveToWord.Text = strings.saveAsDoc;
+            reset.Text = strings.reset;
+            dataGridView1.Columns["names"].HeaderText = strings.name;
+            dataGridView1.Columns["barcode"].HeaderText = strings.barcode;
 
 
             main = m;
 
-            this.MaximizeBox = false;
+            MaximizeBox = false;
             if (main.multiBorrowOnTop)
-            {
-                this.TopMost = true;
-            }
+                TopMost = true;
             else
-            {
-                this.TopMost = false;
-            }
+                TopMost = false;
 
             doc = new XmlDocument();
             doc.Load(FileManager.GetDataBasePath(FileManager.NAMES.DATA));
         }
 
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int CS_DROPSHADOW = 0x20000;
+                var cp = base.CreateParams;
+                cp.ClassStyle |= CS_DROPSHADOW;
+                return cp;
+            }
+        }
+
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex.Equals(0))
-            {
                 try
                 {
                     foreach (XmlNode n in doc.SelectNodes("/data/item/barcode"))
-                    {
                         if (n.InnerXml.Equals(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()))
-                        {
-                            dataGridView1.Rows[e.RowIndex].Cells[1].Value = doc.SelectSingleNode("/data/item[barcode='" + n.InnerXml + "']/itemName").InnerXml;
-
-                        }
-                    }
+                            dataGridView1.Rows[e.RowIndex].Cells[1].Value = doc
+                                .SelectSingleNode("/data/item[barcode='" + n.InnerXml + "']/itemName").InnerXml;
                 }
                 catch (Exception exc)
                 {
                     Console.WriteLine(exc.StackTrace);
                 }
-            }
         }
 
 
@@ -76,8 +84,10 @@ namespace allinthebox
         {
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                XmlNode userNode = doc.SelectSingleNode("/data/item[barcode='" + dataGridView1.Rows[row.Index].Cells[0].Value + "']/user");
-                XmlNode statNode = doc.SelectSingleNode("/data/item[barcode='" + dataGridView1.Rows[row.Index].Cells[0].Value + "']/status");
+                var userNode = doc.SelectSingleNode("/data/item[barcode='" +
+                                                    dataGridView1.Rows[row.Index].Cells[0].Value + "']/user");
+                var statNode = doc.SelectSingleNode("/data/item[barcode='" +
+                                                    dataGridView1.Rows[row.Index].Cells[0].Value + "']/status");
 
                 if (userNode != null && statNode != null)
                 {
@@ -86,15 +96,12 @@ namespace allinthebox
                     doc.Save(FileManager.GetDataBasePath(FileManager.NAMES.DATA));
                     main.changed = true;
                 }
-
             }
 
             DialogResult reallyDelete;
-            reallyDelete = MessageBox.Show(Properties.strings.wantToSave, Properties.strings.saveQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (reallyDelete == DialogResult.Yes)
-            {
-                await saveFile();
-            }
+            reallyDelete = MessageBox.Show(strings.wantToSave, strings.saveQuestion, MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+            if (reallyDelete == DialogResult.Yes) await saveFile();
 
             main.refresh(false);
         }
@@ -103,8 +110,10 @@ namespace allinthebox
         {
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                XmlNode userNode = doc.SelectSingleNode("/data/item[barcode='" + dataGridView1.Rows[row.Index].Cells[0].Value + "']/user");
-                XmlNode statNode = doc.SelectSingleNode("/data/item[barcode='" + dataGridView1.Rows[row.Index].Cells[0].Value + "']/status");
+                var userNode = doc.SelectSingleNode("/data/item[barcode='" +
+                                                    dataGridView1.Rows[row.Index].Cells[0].Value + "']/user");
+                var statNode = doc.SelectSingleNode("/data/item[barcode='" +
+                                                    dataGridView1.Rows[row.Index].Cells[0].Value + "']/status");
 
                 if (userNode != null && statNode != null)
                 {
@@ -113,62 +122,58 @@ namespace allinthebox
                     doc.Save(FileManager.GetDataBasePath(FileManager.NAMES.DATA));
                     main.changed = true;
                 }
-
             }
 
             main.refresh(false);
-
         }
 
         private void multiBorrow_Load(object sender, EventArgs e)
         {
-            Main.currentOpenWindows.Add(this.Name);
+            Main.currentOpenWindows.Add(Name);
         }
 
         private void multiBorrow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Main.currentOpenWindows.Remove(this.Name);
+            Main.currentOpenWindows.Remove(Name);
         }
 
         private async void saveToWord_Click(object sender, EventArgs e)
         {
             await saveFile();
-
         }
 
         private async Task saveFile()
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = Properties.strings.doc + "|*.docx|" + Properties.strings.excel + "|*.xlsx";
+            var sfd = new SaveFileDialog();
+            sfd.Filter = strings.doc + "|*.docx|" + strings.excel + "|*.xlsx";
             sfd.ShowDialog();
 
-            string fileName = sfd.FileName;
+            var fileName = sfd.FileName;
 
 
             if (fileName != "" || fileName != null)
             {
                 if (sfd.FilterIndex == 1)
-                {
                     await Task.Factory.StartNew(delegate
                     {
                         try
                         {
-                            DocX doc = DocX.Create(fileName);
+                            var doc = DocX.Create(fileName);
 
-                            Xceed.Words.NET.Formatting titleFormat = new Xceed.Words.NET.Formatting();
-                            titleFormat.FontFamily = new Xceed.Words.NET.Font("Calibri");
+                            var titleFormat = new Formatting();
+                            titleFormat.FontFamily = new Font("Calibri");
                             titleFormat.Size = 18;
                             titleFormat.Position = 40;
                             titleFormat.Bold = true;
 
-                            doc.InsertParagraph(Properties.strings.listSentence_1 + " " + main.user_loggedin + " " + Properties.strings.listSentence_2 + " " + System.DateTime.Today.Date.ToString("dd.MM.yyyy"), false, titleFormat);
-
+                            doc.InsertParagraph(
+                                strings.listSentence_1 + " " + main.user_loggedin + " " + strings.listSentence_2 + " " +
+                                DateTime.Today.Date.ToString("dd.MM.yyyy"), false, titleFormat);
 
 
                             if (dataGridView1.Rows.Count > 0)
                             {
-
-                                Table t = doc.AddTable(dataGridView1.Rows.Count, 4);
+                                var t = doc.AddTable(dataGridView1.Rows.Count, 4);
                                 t.Alignment = Alignment.left;
                                 t.Design = TableDesign.LightGrid;
                                 t.SetBorder(TableBorderType.InsideH, new Border());
@@ -178,22 +183,25 @@ namespace allinthebox
                                 t.SetBorder(TableBorderType.Top, new Border());
                                 t.SetBorder(TableBorderType.Bottom, new Border());
 
-                                t.Rows[0].Cells[0].Paragraphs.First().Append(Properties.strings.name);
-                                t.Rows[0].Cells[1].Paragraphs.First().Append(Properties.strings.barcode);
-                                t.Rows[0].Cells[2].Paragraphs.First().Append(Properties.strings.comment);
-                                t.Rows[0].Cells[3].Paragraphs.First().Append(Properties.strings.tick);
+                                t.Rows[0].Cells[0].Paragraphs.First().Append(strings.name);
+                                t.Rows[0].Cells[1].Paragraphs.First().Append(strings.barcode);
+                                t.Rows[0].Cells[2].Paragraphs.First().Append(strings.comment);
+                                t.Rows[0].Cells[3].Paragraphs.First().Append(strings.tick);
 
 
-                                for (int i = 0; i < t.RowCount - 1; i++)
+                                for (var i = 0; i < t.RowCount - 1; i++)
                                 {
-                                    t.Rows[i + 1].Cells[0].Paragraphs.First().Append(dataGridView1.Rows[i].Cells[1].Value.ToString());
-                                    t.Rows[i + 1].Cells[1].Paragraphs.First().Append(dataGridView1.Rows[i].Cells[0].Value.ToString());
-                                    t.Rows[i + 1].Cells[2].Paragraphs.First().Append(this.doc.SelectSingleNode("/data/item[barcode='" + dataGridView1.Rows[i].Cells[0].Value + "']/comment").InnerXml.Trim());
-
+                                    t.Rows[i + 1].Cells[0].Paragraphs.First()
+                                        .Append(dataGridView1.Rows[i].Cells[1].Value.ToString());
+                                    t.Rows[i + 1].Cells[1].Paragraphs.First()
+                                        .Append(dataGridView1.Rows[i].Cells[0].Value.ToString());
+                                    t.Rows[i + 1].Cells[2].Paragraphs.First().Append(this.doc
+                                        .SelectSingleNode("/data/item[barcode='" +
+                                                          dataGridView1.Rows[i].Cells[0].Value + "']/comment").InnerXml
+                                        .Trim());
                                 }
 
                                 doc.InsertTable(t);
-
                             }
 
                             doc.Save();
@@ -204,66 +212,82 @@ namespace allinthebox
                         }
                         finally
                         {
-                            string[] fileNameSplit = fileName.Split('\\');
-                            string fileNameOnly = fileNameSplit.Last();
+                            var fileNameSplit = fileName.Split('\\');
+                            var fileNameOnly = fileNameSplit.Last();
                             if (File.Exists(fileName))
-                            {
-                                MessageBox.Show(Properties.strings.file + " \"" + fileNameOnly + "\" " + Properties.strings.fileSavedSentence_2);
-                            }
+                                MessageBox.Show(strings.file + " \"" + fileNameOnly + "\" " +
+                                                strings.fileSavedSentence_2);
                         }
-
                     });
 
-                }
-
                 if (sfd.FilterIndex == 2)
-                {
-                    await Task.Factory.StartNew(delegate {
+                    await Task.Factory.StartNew(delegate
+                    {
                         // Creating a Excel object. 
-                        Microsoft.Office.Interop.Excel._Application excel = new Microsoft.Office.Interop.Excel.Application();
-                        Microsoft.Office.Interop.Excel._Workbook workbook = excel.Workbooks.Add(Type.Missing);
-                        Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
+                        _Application excel = new Application();
+                        _Workbook workbook = excel.Workbooks.Add(Type.Missing);
+                        _Worksheet worksheet = null;
 
                         try
                         {
-
                             worksheet = workbook.ActiveSheet;
 
-                            worksheet.Name = Properties.strings.list;
+                            worksheet.Name = strings.list;
 
-                            int cellRowIndex = 1;
-                            int cellColumnIndex = 1;
+                            var cellRowIndex = 1;
+                            var cellColumnIndex = 1;
 
                             worksheet.Cells[1, 1].EntireRow.Font.Bold = true;
 
-                            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                            for (var i = 0; i < dataGridView1.Rows.Count; i++)
                             {
-                                for (int j = 0; j < 4; j++)
+                                for (var j = 0; j < 4; j++)
                                 {
-                                    worksheet.Cells[cellRowIndex, cellColumnIndex].Borders.LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+                                    worksheet.Cells[cellRowIndex, cellColumnIndex].Borders.LineStyle =
+                                        XlLineStyle.xlContinuous;
                                     if (cellRowIndex == 1)
-                                    {
                                         switch (j)
                                         {
-                                            case 0: worksheet.Cells[cellRowIndex, cellColumnIndex] = dataGridView1.Columns[0].HeaderText; break;
-                                            case 1: worksheet.Cells[cellRowIndex, cellColumnIndex] = dataGridView1.Columns[1].HeaderText; break;
-                                            case 2: worksheet.Cells[cellRowIndex, cellColumnIndex] = Properties.strings.comment; break;
-                                            case 3: worksheet.Cells[cellRowIndex, cellColumnIndex] = Properties.strings.tick; break;
+                                            case 0:
+                                                worksheet.Cells[cellRowIndex, cellColumnIndex] =
+                                                    dataGridView1.Columns[0].HeaderText;
+                                                break;
+                                            case 1:
+                                                worksheet.Cells[cellRowIndex, cellColumnIndex] =
+                                                    dataGridView1.Columns[1].HeaderText;
+                                                break;
+                                            case 2:
+                                                worksheet.Cells[cellRowIndex, cellColumnIndex] = strings.comment;
+                                                break;
+                                            case 3:
+                                                worksheet.Cells[cellRowIndex, cellColumnIndex] = strings.tick;
+                                                break;
+                                        }
+                                    else
+                                        switch (j)
+                                        {
+                                            case 0:
+                                                worksheet.Cells[cellRowIndex, cellColumnIndex] =
+                                                    "\t" + dataGridView1.Rows[i - 1].Cells[0].Value;
+                                                break;
+                                            case 1:
+                                                worksheet.Cells[cellRowIndex, cellColumnIndex] =
+                                                    "\t" + dataGridView1.Rows[i - 1].Cells[1].Value;
+                                                break;
+                                            case 2:
+                                                worksheet.Cells[cellRowIndex, cellColumnIndex] =
+                                                    doc.SelectSingleNode("/data/item[barcode='" +
+                                                                         dataGridView1.Rows[i - 1].Cells[0].Value +
+                                                                         "']/comment").InnerXml.Trim();
+                                                break;
+                                            case 3:
+                                                worksheet.Cells[cellRowIndex, cellColumnIndex] = "";
+                                                break;
                                         }
 
-                                    }
-                                    else
-                                    {
-                                        switch (j)
-                                        {
-                                            case 0: worksheet.Cells[cellRowIndex, cellColumnIndex] = "\t" + dataGridView1.Rows[i - 1].Cells[0].Value.ToString(); break;
-                                            case 1: worksheet.Cells[cellRowIndex, cellColumnIndex] = "\t" + dataGridView1.Rows[i - 1].Cells[1].Value.ToString(); break;
-                                            case 2: worksheet.Cells[cellRowIndex, cellColumnIndex] = this.doc.SelectSingleNode("/data/item[barcode='" + dataGridView1.Rows[i - 1].Cells[0].Value + "']/comment").InnerXml.Trim(); break;
-                                            case 3: worksheet.Cells[cellRowIndex, cellColumnIndex] = ""; break;
-                                        }
-                                    }
                                     cellColumnIndex++;
                                 }
+
                                 cellColumnIndex = 1;
                                 cellRowIndex++;
                             }
@@ -271,27 +295,24 @@ namespace allinthebox
                             worksheet.Cells[dataGridView1.Rows.Count, 1].Columns.EntireColumn.AutoFit();
                             worksheet.Cells[dataGridView1.Rows.Count, 2].Columns.EntireColumn.AutoFit();
                             worksheet.Cells[dataGridView1.Rows.Count, 3].Columns.EntireColumn.AutoFit();
-                            worksheet.Cells[dataGridView1.Rows.Count,4].Columns.EntireColumn.AutoFit();
+                            worksheet.Cells[dataGridView1.Rows.Count, 4].Columns.EntireColumn.AutoFit();
 
                             workbook.SaveAs(fileName);
-
                         }
-                        catch (System.Exception ex)
+                        catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message);
                         }
                         finally
                         {
-                            string[] fileNameSplit = fileName.Split('\\');
-                            string fileNameOnly = fileNameSplit.Last();
-                            MessageBox.Show(Properties.strings.file + " \"" + fileNameOnly + "\" " + Properties.strings.fileSavedSentence_2);
+                            var fileNameSplit = fileName.Split('\\');
+                            var fileNameOnly = fileNameSplit.Last();
+                            MessageBox.Show(strings.file + " \"" + fileNameOnly + "\" " + strings.fileSavedSentence_2);
                             excel.Quit();
                             workbook = null;
                             excel = null;
                         }
                     });
-
-                }
             }
         }
 
@@ -302,82 +323,56 @@ namespace allinthebox
 
         private void dataGridView1_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == main.delHotKey.key && (e.Control || !main.delHotKey.controlNeeded) && (e.Alt || !main.delHotKey.altNeeded) && (e.Shift || !main.delHotKey.shiftNeeded))
-            {
-
+            if (e.KeyCode == main.delHotKey.key && (e.Control || !main.delHotKey.controlNeeded) &&
+                (e.Alt || !main.delHotKey.altNeeded) && (e.Shift || !main.delHotKey.shiftNeeded))
                 foreach (DataGridViewRow row in dataGridView1.SelectedRows)
                 {
                     MessageBox.Show("");
 
                     dataGridView1.Rows.RemoveAt(row.Index);
                 }
-            }
 
-            if (e.KeyCode == main.saveHotKey.key && (e.Control || !main.saveHotKey.controlNeeded) && (e.Alt || !main.saveHotKey.altNeeded) && (e.Shift || !main.saveHotKey.shiftNeeded))
-            {
-                saveFile();
-            }
+            if (e.KeyCode == main.saveHotKey.key && (e.Control || !main.saveHotKey.controlNeeded) &&
+                (e.Alt || !main.saveHotKey.altNeeded) && (e.Shift || !main.saveHotKey.shiftNeeded)) saveFile();
         }
 
         private void tableLayoutPanel1_CellPaint(object sender, TableLayoutCellPaintEventArgs e)
         {
-            if (e.Row == 0) {
-                using (SolidBrush brush = new SolidBrush(Color.Silver))
+            if (e.Row == 0)
+                using (var brush = new SolidBrush(Color.Silver))
+                {
                     e.Graphics.FillRectangle(brush, e.CellBounds);
-            }
-        }
-
-
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                const int CS_DROPSHADOW = 0x20000;
-                CreateParams cp = base.CreateParams;
-                cp.ClassStyle |= CS_DROPSHADOW;
-                return cp;
-            }
+                }
         }
 
         private void closeButton_Click(object sender, EventArgs e)
         {
-            MouseEventArgs me = (MouseEventArgs)e;
-            if (me.Button == MouseButtons.Left)
-            {
-                this.Close();
-            }
+            var me = (MouseEventArgs) e;
+            if (me.Button == MouseButtons.Left) Close();
         }
 
         private void closeButton_MouseEnter(object sender, EventArgs e)
         {
-            ToolTip tt = new ToolTip();
-            tt.SetToolTip(this.closeButton, Properties.strings.close);
-            this.closeButton.BackColor = Color.FromArgb(223, 1, 1);
-            this.closeButton.Image = allinthebox.Properties.Resources.close_white;
+            var tt = new ToolTip();
+            tt.SetToolTip(closeButton, strings.close);
+            closeButton.BackColor = Color.FromArgb(223, 1, 1);
+            closeButton.Image = Resources.close_white;
         }
 
         private void closeButton_MouseLeave(object sender, EventArgs e)
         {
-            this.closeButton.BackColor = Color.Transparent;
+            closeButton.BackColor = Color.Transparent;
             if (iconStyle == 1)
-            {
-                this.closeButton.Image = allinthebox.Properties.Resources.close;
-            }
+                closeButton.Image = Resources.close;
             else
-            {
-                this.closeButton.Image = allinthebox.Properties.Resources.close_white;
-            }
+                closeButton.Image = Resources.close_white;
         }
-
-        int mouseX = 0, mouseY = 0;
-        bool mousedown, maximized;
-        int grabX = 0, grabY = 0;
 
         private void bg_MouseDown(object sender, MouseEventArgs e)
         {
             mousedown = true;
-            grabX = (MousePosition.X - this.DesktopLocation.X);
-            grabY = (MousePosition.Y - this.DesktopLocation.Y);
+            grabX = MousePosition.X - DesktopLocation.X;
+            grabY = MousePosition.Y - DesktopLocation.Y;
         }
 
         private void bg_MouseMove(object sender, MouseEventArgs e)
@@ -386,15 +381,13 @@ namespace allinthebox
             {
                 mouseX = MousePosition.X - grabX;
                 mouseY = MousePosition.Y - grabY;
-                this.SetDesktopLocation(mouseX, mouseY);
+                SetDesktopLocation(mouseX, mouseY);
             }
         }
 
         private void bg_MouseUp(object sender, MouseEventArgs e)
         {
             mousedown = false;
-
         }
     }
 }
-

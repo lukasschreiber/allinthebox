@@ -1,83 +1,83 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
+using allinthebox.Properties;
+using Transitions;
 
 namespace allinthebox
 {
     public partial class rm : Form
     {
-        public String curPreset;
-        List<Label> labels = new List<Label>();
+        public string curPreset;
+        private readonly List<Label> labels = new List<Label>();
         public Main main;
+
+
+        private Point MouseDownLocation;
+        private int num;
+
+        private Label selected;
+
         public rm(Main m)
         {
             InitializeComponent();
 
             //language
-            this.Text = Properties.strings.regalmanager;
-            this.add.Text = Properties.strings.add;
-            this.delete.Text = Properties.strings.delete;
-            this.refresh.Text = Properties.strings.refresh;
-            this.label1.Text = Properties.strings.regalManagerDescribe;
-            this.preset.Text = Properties.strings.preset;
-            this.load_preset.Text = Properties.strings.loadPreset;
+            Text = strings.regalmanager;
+            add.Text = strings.add;
+            delete.Text = strings.delete;
+            refresh.Text = strings.refresh;
+            label1.Text = strings.regalManagerDescribe;
+            preset.Text = strings.preset;
+            load_preset.Text = strings.loadPreset;
 
 
-            this.main = m;
+            main = m;
             loadData();
             if (main.rmOnTop)
-            {
-                this.TopMost = true;
-            }
-            else {
-                this.TopMost = false;
-            }
-            this.MaximizeBox = false;
+                TopMost = true;
+            else
+                TopMost = false;
+            MaximizeBox = false;
         }
-
-        private Label selected = null;
-        private int num = 0;
 
         public void loadData()
         {
             labels.Clear();
-            XmlDocument session = new XmlDocument();
+            var session = new XmlDocument();
             session.Load(FileManager.GetDataBasePath(FileManager.NAMES.SESSION));
             curPreset = session.SelectSingleNode("/list/session/preset").InnerText;
 
-            bg.BackgroundImage = Image.FromFile(FileManager.GetDataBasePath("Presets\\"+curPreset));
+            bg.BackgroundImage = Image.FromFile(FileManager.GetDataBasePath("Presets\\" + curPreset));
 
-            XDocument doc = XDocument.Load(FileManager.GetDataBasePath(FileManager.NAMES.RACKS));
+            var doc = XDocument.Load(FileManager.GetDataBasePath(FileManager.NAMES.RACKS));
 
             foreach (var dm in doc.Descendants("regal"))
             {
-                String item = dm.Element("name").Value;
+                var item = dm.Element("name").Value;
 
                 create(item);
 
 
-                System.Threading.Thread.Sleep(1);
-
-  
+                Thread.Sleep(1);
             }
         }
 
         private void add_Click(object sender, EventArgs e)
         {
-            if (nameText.Text != "") {
-                String spath = FileManager.GetDataBasePath(FileManager.NAMES.RACKS);
-                XDocument doc = XDocument.Load(spath);
-                XElement root = new XElement("regal");
+            if (nameText.Text != "")
+            {
+                var spath = FileManager.GetDataBasePath(FileManager.NAMES.RACKS);
+                var doc = XDocument.Load(spath);
+                var root = new XElement("regal");
                 root.Add(new XElement("name", nameText.Text));
                 root.Add(new XElement("x", ""));
                 root.Add(new XElement("y", ""));
@@ -87,8 +87,8 @@ namespace allinthebox
 
                 doc.Save(spath);
 
-                
-                System.Threading.Thread.Sleep(100);
+
+                Thread.Sleep(100);
                 loadData();
             }
         }
@@ -98,18 +98,18 @@ namespace allinthebox
             Delete();
         }
 
-        private async void Delete() {
+        private async void Delete()
+        {
             if (selected != null)
-            {
-                if (DialogResult.Yes == MessageBox.Show(Properties.strings.regalDelete, Properties.strings.submit, MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                if (DialogResult.Yes == MessageBox.Show(strings.regalDelete, strings.submit, MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning))
                 {
+                    var temp_name = selected.Text;
 
-                    String temp_name = selected.Text;
-
-                    XmlDocument doc = new XmlDocument();
+                    var doc = new XmlDocument();
                     doc.Load(FileManager.GetDataBasePath(FileManager.NAMES.RACKS));
-                    String XPath = "/list/regal[name='" + temp_name + "']";
-                    XmlNode node = doc.SelectSingleNode(XPath);
+                    var XPath = "/list/regal[name='" + temp_name + "']";
+                    var node = doc.SelectSingleNode(XPath);
                     node.ParentNode.RemoveChild(node);
                     doc.Save(FileManager.GetDataBasePath(FileManager.NAMES.RACKS));
 
@@ -122,17 +122,12 @@ namespace allinthebox
                     loadData();
 
                     main.changed = true;
-                    XmlDocument dataBase = main.loadDataBase();
+                    var dataBase = main.loadDataBase();
                     foreach (XmlNode n in dataBase.SelectNodes("/data/item"))
-                    {
                         if (n.SelectSingleNode("regal").InnerXml == temp_name)
-                        {
                             n.SelectSingleNode("regal").InnerXml = "";
-                        }
-                    }
                     await SaveAsync(dataBase, FileManager.NAMES.DATA);
                 }
-            }
         }
 
 
@@ -144,98 +139,87 @@ namespace allinthebox
 
         private void clear()
         {
-
-            XDocument doc = XDocument.Load(FileManager.GetDataBasePath(FileManager.NAMES.RACKS));
+            var doc = XDocument.Load(FileManager.GetDataBasePath(FileManager.NAMES.RACKS));
 
             foreach (var dm in doc.Descendants("regal"))
             {
-                String name = dm.Element("name").Value;
+                var name = dm.Element("name").Value;
 
-                Label lb = Controls.Find("label_"+name, true).FirstOrDefault() as Label;
+                var lb = Controls.Find("label_" + name, true).FirstOrDefault() as Label;
 
                 Controls.Remove(lb);
                 lb.Dispose();
-
             }
 
             num = 0;
             number.Text = "0 / 32";
-
         }
 
         private void create(string name)
         {
-            Label lbl = new Label();
+            var lbl = new Label();
 
-            Random rnd = new Random();
+            var rnd = new Random();
 
-            XmlDocument doc = new XmlDocument();
+            var doc = new XmlDocument();
             doc.Load(FileManager.GetDataBasePath(FileManager.NAMES.RACKS));
 
-            String x_xml = "/list/regal[name='" + name + "']/x";
-            XmlNode x_node = doc.SelectSingleNode(x_xml);
-            string pre_x = x_node.InnerXml;
+            var x_xml = "/list/regal[name='" + name + "']/x";
+            var x_node = doc.SelectSingleNode(x_xml);
+            var pre_x = x_node.InnerXml;
 
-            String y_xml = "/list/regal[name='" + name + "']/y";
-            XmlNode y_node = doc.SelectSingleNode(y_xml);
-            string pre_y = y_node.InnerXml;
+            var y_xml = "/list/regal[name='" + name + "']/y";
+            var y_node = doc.SelectSingleNode(y_xml);
+            var pre_y = y_node.InnerXml;
 
             if (pre_y != "" && pre_x != "")
             {
-                lbl.Location = new System.Drawing.Point(Int32.Parse(pre_x), Int32.Parse(pre_y));
+                lbl.Location = new Point(int.Parse(pre_x), int.Parse(pre_y));
             }
             else
             {
-                int x = rnd.Next(10, bg.Width - 10);
-                int y = rnd.Next(10, bg.Height - 10);
-                lbl.Location = new System.Drawing.Point(x, y);
-            }   
+                var x = rnd.Next(10, bg.Width - 10);
+                var y = rnd.Next(10, bg.Height - 10);
+                lbl.Location = new Point(x, y);
+            }
+
             lbl.Name = "label_" + name;
             lbl.Text = name;
 
             lbl.AutoSize = true;
-            lbl.Size = new System.Drawing.Size(35, 13);
+            lbl.Size = new Size(35, 13);
             lbl.TabIndex = 0;
-            lbl.MouseDown += new System.Windows.Forms.MouseEventHandler(label_MouseDown);
-            lbl.MouseMove += new System.Windows.Forms.MouseEventHandler(label_MouseMove);
+            lbl.MouseDown += label_MouseDown;
+            lbl.MouseMove += label_MouseMove;
 
 
-            this.bg.Controls.Add(lbl);
+            bg.Controls.Add(lbl);
             num++;
             number.Text = num + " / 32";
 
             if (num >= 32)
-            {
                 add.Enabled = false;
-            }
-            else {
+            else
                 add.Enabled = true;
-            }
             labels.Add(lbl);
         }
 
-
-        private Point MouseDownLocation;
-
         private void label_MouseDown(object sender, MouseEventArgs e)
         {
-            Label L = (Label)sender;
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
-            {
-                MouseDownLocation = e.Location;
-            }
-            XDocument document = XDocument.Load(FileManager.GetDataBasePath(FileManager.NAMES.RACKS));
+            var L = (Label) sender;
+            if (e.Button == MouseButtons.Left) MouseDownLocation = e.Location;
+            var document = XDocument.Load(FileManager.GetDataBasePath(FileManager.NAMES.RACKS));
 
             foreach (var dm in document.Descendants("regal"))
             {
-                String name = dm.Element("name").Value;
+                var name = dm.Element("name").Value;
 
-                Label lb = Controls.Find("label_" + name, true).FirstOrDefault() as Label;
+                var lb = Controls.Find("label_" + name, true).FirstOrDefault() as Label;
 
                 lb.ForeColor = Color.Black;
                 lb.BackColor = Color.White;
-
             }
+
             selected = L;
             selected.ForeColor = Color.White;
             selected.BackColor = Color.Blue;
@@ -243,11 +227,11 @@ namespace allinthebox
 
         private void label_MouseMove(object sender, MouseEventArgs e)
         {
-            Label L = (Label)sender;
-            Rectangle PR = L.Parent.ClientRectangle;
+            var L = (Label) sender;
+            var PR = L.Parent.ClientRectangle;
             if (e.Button == MouseButtons.Left)
             {
-                Transitions.Transition t = new Transitions.Transition(new Transitions.TransitionType_Linear(3));
+                var t = new Transition(new TransitionType_Linear(3));
                 t.add(L, "Left", Math.Min(Math.Max(0, e.X + L.Left - 10), PR.Right - L.Width));
                 t.add(L, "Top", Math.Min(Math.Max(0, e.Y + L.Top - 10), PR.Bottom - L.Height));
                 t.run();
@@ -256,20 +240,18 @@ namespace allinthebox
 
         private void bg_Click(object sender, EventArgs e)
         {
-            XDocument document = XDocument.Load(FileManager.GetDataBasePath(FileManager.NAMES.RACKS));
+            var document = XDocument.Load(FileManager.GetDataBasePath(FileManager.NAMES.RACKS));
 
             foreach (var dm in document.Descendants("regal"))
             {
-                String name = dm.Element("name").Value;
+                var name = dm.Element("name").Value;
 
-                Label lb = Controls.Find("label_" + name, true).FirstOrDefault() as Label;
+                var lb = Controls.Find("label_" + name, true).FirstOrDefault() as Label;
 
                 lb.ForeColor = Color.Black;
                 lb.BackColor = Color.White;
 
-               // System.Threading.Thread.Sleep(50);
-
-
+                // System.Threading.Thread.Sleep(50);
             }
 
             selected = null;
@@ -277,81 +259,80 @@ namespace allinthebox
 
         private void preset_Click(object sender, EventArgs e)
         {
-            SaveFileDialog SFD = new SaveFileDialog();
-            SFD.Title = Properties.strings.savePreset;
-            SFD.InitialDirectory = @Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            SFD.Filter = Properties.strings.presetType + " (*.png)|*.png";
+            var SFD = new SaveFileDialog();
+            SFD.Title = strings.savePreset;
+            SFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            SFD.Filter = strings.presetType + " (*.png)|*.png";
             SFD.ShowDialog();
 
             if (!File.Exists(SFD.FileName))
             {
-
-                Bitmap bmp = new Bitmap(bg.Width, bg.Height);
-                Graphics g = Graphics.FromImage(bmp);
+                var bmp = new Bitmap(bg.Width, bg.Height);
+                var g = Graphics.FromImage(bmp);
 
                 g.Clear(Color.White);
 
                 g.Flush();
-                bmp.Save(SFD.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                bmp.Save(SFD.FileName, ImageFormat.Png);
 
-                MessageBox.Show(Properties.strings.fileCreated);
-
+                MessageBox.Show(strings.fileCreated);
             }
-            else {
-                MessageBox.Show(Properties.strings.fileAlreadyExists);
+            else
+            {
+                MessageBox.Show(strings.fileAlreadyExists);
             }
-
         }
 
         private void load_preset_Click(object sender, EventArgs e)
         {
-            OpenFileDialog OFD = new OpenFileDialog();
+            var OFD = new OpenFileDialog();
 
-            OFD.Title = Properties.strings.choosePreset;
+            OFD.Title = strings.choosePreset;
             OFD.Multiselect = false;
             OFD.ReadOnlyChecked = true;
             OFD.InitialDirectory = FileManager.GetDataBasePath("Presets\\");
-            OFD.Filter = Properties.strings.presetType+" (*.png)|*.png|" + Properties.strings.allFilesType + " (*.*)|*.*";
+            OFD.Filter = strings.presetType + " (*.png)|*.png|" + strings.allFilesType + " (*.*)|*.*";
             OFD.FilterIndex = 1;
             OFD.RestoreDirectory = true;
 
             if (OFD.ShowDialog() == DialogResult.OK)
             {
-                String fullPath = OFD.FileName;
+                var fullPath = OFD.FileName;
 
-                String fileName = System.IO.Path.GetFileName(fullPath);
+                var fileName = Path.GetFileName(fullPath);
 
-                String filePath = System.IO.Path.GetDirectoryName(fullPath);
+                var filePath = Path.GetDirectoryName(fullPath);
 
-                int numOfOldPresets = Directory.GetFiles(FileManager.GetDataBasePath("Presets"), "*", SearchOption.AllDirectories).Length;
+                var numOfOldPresets = Directory
+                    .GetFiles(FileManager.GetDataBasePath("Presets"), "*", SearchOption.AllDirectories).Length;
 
-                String newName = fileName;
+                var newName = fileName;
 
                 if (filePath != FileManager.GetDataBasePath("Presets"))
                 {
-                    System.IO.File.Copy(fullPath, FileManager.GetDataBasePath("Presets\\" + newName));
+                    File.Copy(fullPath, FileManager.GetDataBasePath("Presets\\" + newName));
 
-                    XmlDocument document = new XmlDocument();
+                    var document = new XmlDocument();
                     document.Load(FileManager.GetDataBasePath(FileManager.NAMES.SESSION));
 
-                    String XPathName = "/list/session/preset";
-                    XmlNode node_name = document.SelectSingleNode(XPathName);
+                    var XPathName = "/list/session/preset";
+                    var node_name = document.SelectSingleNode(XPathName);
                     node_name.InnerXml = newName;
                     document.Save(FileManager.GetDataBasePath(FileManager.NAMES.SESSION));
 
                     bg.BackgroundImage = Image.FromFile(FileManager.GetDataBasePath("Presets\\" + newName));
                 }
-                else {
-                    XmlDocument document = new XmlDocument();
+                else
+                {
+                    var document = new XmlDocument();
                     document.Load(FileManager.GetDataBasePath(FileManager.NAMES.SESSION));
 
-                    String XPathName = "/list/session/preset";
-                    XmlNode node_name = document.SelectSingleNode(XPathName);
+                    var XPathName = "/list/session/preset";
+                    var node_name = document.SelectSingleNode(XPathName);
                     node_name.InnerXml = fileName;
                     document.Save(FileManager.GetDataBasePath(FileManager.NAMES.SESSION));
                     bg.BackgroundImage = Image.FromFile(FileManager.GetDataBasePath("Presets\\" + fileName));
                 }
-
             }
         }
 
@@ -359,7 +340,7 @@ namespace allinthebox
         {
             await Task.Factory.StartNew(delegate
             {
-                using (var fs = new FileStream(FileManager.GetDataBasePath("//"+filename), FileMode.Create))
+                using (var fs = new FileStream(FileManager.GetDataBasePath("//" + filename), FileMode.Create))
                 {
                     xml.Save(fs);
                 }
@@ -368,35 +349,33 @@ namespace allinthebox
 
         private void rm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Main.currentOpenWindows.Remove(this.Name);
+            Main.currentOpenWindows.Remove(Name);
 
-            XmlDocument doc = new XmlDocument();
+            var doc = new XmlDocument();
             doc.Load(FileManager.GetDataBasePath(FileManager.NAMES.RACKS));
 
-            foreach (Label L in labels)
+            foreach (var L in labels)
             {
-                String x_xml = "/list/regal[name='" + L.Text + "']/x";
-                XmlNode x_node = doc.SelectSingleNode(x_xml);
+                var x_xml = "/list/regal[name='" + L.Text + "']/x";
+                var x_node = doc.SelectSingleNode(x_xml);
                 x_node.InnerXml = L.Location.X.ToString();
 
-                String y_xml = "/list/regal[name='" + L.Text + "']/y";
-                XmlNode y_node = doc.SelectSingleNode(y_xml);
+                var y_xml = "/list/regal[name='" + L.Text + "']/y";
+                var y_node = doc.SelectSingleNode(y_xml);
                 y_node.InnerXml = L.Location.Y.ToString();
             }
+
             doc.Save(FileManager.GetDataBasePath(FileManager.NAMES.RACKS));
 
 
             main.rmChanged = true;
             main.refresh(false);
-            if (main.dataGrid.RowCount > 0)
-            {
-                main.loadDataToView(main.dataGrid.SelectedRows[0].Index);
-            }
+            if (main.dataGrid.RowCount > 0) main.loadDataToView(main.dataGrid.SelectedRows[0].Index);
         }
 
         private void rm_Load(object sender, EventArgs e)
         {
-            Main.currentOpenWindows.Add(this.Name);
+            Main.currentOpenWindows.Add(Name);
         }
     }
 }

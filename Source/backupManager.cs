@@ -1,23 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using allinthebox.Properties;
 
 namespace allinthebox
 {
     public partial class backupManager : Form
     {
-        Main main;
-        int iconStyle = 1;
         public string currentStyle;
+        private int grabX, grabY;
+        private readonly int iconStyle = 1;
+        private readonly Main main;
+        private bool mousedown, maximized;
+
+        private int mouseX, mouseY;
 
         public backupManager(Main m)
         {
@@ -25,81 +25,96 @@ namespace allinthebox
             InitializeComponent();
 
             //language
-            this.label2.Text = Properties.strings.backup;
-            this.bunifuFlatButton1.Text = Properties.strings.backupManually;
-            this.label1.Text = Properties.strings.autoBackup;
-            this.lastUpdate.Text = Properties.strings.lastBackup;
-            this.nextBackupLabel.Text = Properties.strings.nextBackup;
-            this.bunifuFlatButton2.Text = Properties.strings.restore;
+            label2.Text = strings.backup;
+            bunifuFlatButton1.Text = strings.backupManually;
+            label1.Text = strings.autoBackup;
+            lastUpdate.Text = strings.lastBackup;
+            nextBackupLabel.Text = strings.nextBackup;
+            bunifuFlatButton2.Text = strings.restore;
 
 
-            XmlDocument set = new XmlDocument();
+            var set = new XmlDocument();
             set.Load(FileManager.GetDataBasePath(FileManager.NAMES.SETTINGS));
-            options.Items.Add(Properties.strings.never);
-            options.Items.Add(Properties.strings.daily);
-            options.Items.Add(Properties.strings.weekly);
-            options.Items.Add(Properties.strings.monthly);
-            options.Items.Add(Properties.strings.annually);
+            options.Items.Add(strings.never);
+            options.Items.Add(strings.daily);
+            options.Items.Add(strings.weekly);
+            options.Items.Add(strings.monthly);
+            options.Items.Add(strings.annually);
             options.Text = set.SelectSingleNode("/settings/backupSchedule").InnerXml;
             refreshUI();
 
             //load style
             currentStyle = main.loadSettingsDataBase().SelectSingleNode("/settings/style").InnerXml;
 
-            ColorConverter cc = new ColorConverter();
-
-          
+            var cc = new ColorConverter();
         }
 
-        public void refreshUI() {
-            XmlDocument set = new XmlDocument();
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int CS_DROPSHADOW = 0x20000;
+                var cp = base.CreateParams;
+                cp.ClassStyle |= CS_DROPSHADOW;
+                return cp;
+            }
+        }
+
+        public void refreshUI()
+        {
+            var set = new XmlDocument();
             set.Load(FileManager.GetDataBasePath(FileManager.NAMES.SETTINGS));
             if (set.SelectSingleNode("/settings/backupSchedule").InnerXml != "")
             {
-                string[] formattedDateArr = set.SelectSingleNode("/settings/lastUpdate").InnerXml.Split('/');
-                string formattedDate = formattedDateArr[1] + "." + formattedDateArr[0] + "." + formattedDateArr[2];
-                lastUpdate.Text = Properties.strings.lastBackup + ": " + formattedDate + " " + Properties.strings.timeFormat;
+                var formattedDateArr = set.SelectSingleNode("/settings/lastUpdate").InnerXml.Split('/');
+                var formattedDate = formattedDateArr[1] + "." + formattedDateArr[0] + "." + formattedDateArr[2];
+                lastUpdate.Text = strings.lastBackup + ": " + formattedDate + " " + strings.timeFormat;
             }
             else
             {
-                lastUpdate.Text = Properties.strings.lastBackup + ": " + Properties.strings.never;
+                lastUpdate.Text = strings.lastBackup + ": " + strings.never;
             }
 
             var backupSchedule = set.SelectSingleNode("/settings/backupSchedule").InnerXml;
             long nextBackup = 0;
-            var dt = DateTime.ParseExact(set.SelectSingleNode("/settings/lastUpdate").InnerXml, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-            long lastBackup = dt.ToFileTimeUtc();
+            var dt = DateTime.ParseExact(set.SelectSingleNode("/settings/lastUpdate").InnerXml, "MM/dd/yyyy HH:mm:ss",
+                CultureInfo.InvariantCulture);
+            var lastBackup = dt.ToFileTimeUtc();
 
 
-            if (backupSchedule == Properties.strings.annually)
+            if (backupSchedule == strings.annually)
             {
-                nextBackup = lastBackup + 31556952000 * (Int64)10000;
-                nextBackupLabel.Text = Properties.strings.nextBackup + ": " + DateTime.FromFileTimeUtc(nextBackup).ToString("dd.MM.yyyy");
+                nextBackup = lastBackup + 31556952000 * 10000;
+                nextBackupLabel.Text = strings.nextBackup + ": " +
+                                       DateTime.FromFileTimeUtc(nextBackup).ToString("dd.MM.yyyy");
             }
-            else if (backupSchedule == Properties.strings.monthly)
+            else if (backupSchedule == strings.monthly)
             {
-                nextBackup = lastBackup + 2592000000 * (Int64)10000;
-                nextBackupLabel.Text = Properties.strings.nextBackup + ": " + DateTime.FromFileTimeUtc(nextBackup).ToString("dd.MM.yyyy");
+                nextBackup = lastBackup + 2592000000 * (long) 10000;
+                nextBackupLabel.Text = strings.nextBackup + ": " +
+                                       DateTime.FromFileTimeUtc(nextBackup).ToString("dd.MM.yyyy");
             }
-            else if (backupSchedule == Properties.strings.weekly)
+            else if (backupSchedule == strings.weekly)
             {
-                nextBackup = lastBackup + 604800000 * (Int64)10000;
-                nextBackupLabel.Text = Properties.strings.nextBackup + ": " + DateTime.FromFileTimeUtc(nextBackup).ToString("dd.MM.yyyy");
+                nextBackup = lastBackup + 604800000 * (long) 10000;
+                nextBackupLabel.Text = strings.nextBackup + ": " +
+                                       DateTime.FromFileTimeUtc(nextBackup).ToString("dd.MM.yyyy");
             }
-            else if (backupSchedule == Properties.strings.daily)
+            else if (backupSchedule == strings.daily)
             {
-                nextBackupLabel.Text = Properties.strings.nextBackup + ": " + Properties.strings.atNextStart;
+                nextBackupLabel.Text = strings.nextBackup + ": " + strings.atNextStart;
             }
-            else if (backupSchedule == Properties.strings.never) {
-                nextBackupLabel.Text = Properties.strings.nextBackup + ": " + Properties.strings.never;
+            else if (backupSchedule == strings.never)
+            {
+                nextBackupLabel.Text = strings.nextBackup + ": " + strings.never;
             }
         }
 
         private void backupManager_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.Hide();
+            Hide();
             e.Cancel = true;
-            Main.currentOpenWindows.Remove(this.Name);
+            Main.currentOpenWindows.Remove(Name);
         }
 
         private async void bunifuFlatButton1_Click(object sender, EventArgs e)
@@ -112,30 +127,32 @@ namespace allinthebox
             using (var fbd = new FolderBrowserDialog())
             {
                 fbd.SelectedPath = FileManager.GetDataBasePath();
-                DialogResult result = fbd.ShowDialog();
+                var result = fbd.ShowDialog();
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    string[] files = Directory.GetFiles(fbd.SelectedPath);
+                    var files = Directory.GetFiles(fbd.SelectedPath);
 
                     foreach (var file in files)
                     {
-                        System.IO.File.Copy(file, FileManager.GetDataBasePath() + "\\" + file.Split('\\').Last(), true);
-                        Program.logger.log("BackupManager", "copy from " + file + " to " + FileManager.GetDataBasePath() + file.Split('\\').Last(), Color.Blue);
+                        File.Copy(file, FileManager.GetDataBasePath() + "\\" + file.Split('\\').Last(), true);
+                        Program.logger.log("BackupManager",
+                            "copy from " + file + " to " + FileManager.GetDataBasePath() + file.Split('\\').Last(),
+                            Color.Blue);
                     }
                 }
             }
+
             //main.dataGrid.Rows.Clear();
             main.loadImagesToBuffer();
             main.changed = true;
             main.refresh(false);
-            MessageBox.Show(Properties.strings.restoreOk);
+            MessageBox.Show(strings.restoreOk);
         }
 
         private void options_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-
-            XmlDocument set = new XmlDocument();
+            var set = new XmlDocument();
             set.Load(FileManager.GetDataBasePath(FileManager.NAMES.SETTINGS));
             set.SelectSingleNode("/settings/backupSchedule").InnerXml = options.Text;
             set.Save(FileManager.GetDataBasePath(FileManager.NAMES.SETTINGS));
@@ -143,61 +160,39 @@ namespace allinthebox
             refreshUI();
         }
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                const int CS_DROPSHADOW = 0x20000;
-                CreateParams cp = base.CreateParams;
-                cp.ClassStyle |= CS_DROPSHADOW;
-                return cp;
-            }
-        }
-
         private void closeButton_Click(object sender, EventArgs e)
         {
-            MouseEventArgs me = (MouseEventArgs)e;
-            if (me.Button == MouseButtons.Left)
-            {
-                this.Close();
-            }
+            var me = (MouseEventArgs) e;
+            if (me.Button == MouseButtons.Left) Close();
         }
 
         private void closeButton_MouseEnter(object sender, EventArgs e)
         {
-            ToolTip tt = new ToolTip();
-            tt.SetToolTip(this.closeButton, Properties.strings.close);
-            this.closeButton.BackColor = Color.FromArgb(223, 1, 1);
-            this.closeButton.Image = allinthebox.Properties.Resources.close_white;
+            var tt = new ToolTip();
+            tt.SetToolTip(closeButton, strings.close);
+            closeButton.BackColor = Color.FromArgb(223, 1, 1);
+            closeButton.Image = Resources.close_white;
         }
 
         private void closeButton_MouseLeave(object sender, EventArgs e)
         {
-            this.closeButton.BackColor = Color.Transparent;
+            closeButton.BackColor = Color.Transparent;
             if (iconStyle == 1)
-            {
-                this.closeButton.Image = allinthebox.Properties.Resources.close;
-            }
+                closeButton.Image = Resources.close;
             else
-            {
-                this.closeButton.Image = allinthebox.Properties.Resources.close_white;
-            }
+                closeButton.Image = Resources.close_white;
         }
-
-        int mouseX = 0, mouseY = 0;
-        bool mousedown, maximized;
-        int grabX = 0, grabY = 0;
 
         private void BackupManager_Load(object sender, EventArgs e)
         {
-            Main.currentOpenWindows.Add(this.Name);
+            Main.currentOpenWindows.Add(Name);
         }
 
         private void bg_MouseDown(object sender, MouseEventArgs e)
         {
             mousedown = true;
-            grabX = (MousePosition.X - this.DesktopLocation.X);
-            grabY = (MousePosition.Y - this.DesktopLocation.Y);
+            grabX = MousePosition.X - DesktopLocation.X;
+            grabY = MousePosition.Y - DesktopLocation.Y;
         }
 
         private void bg_MouseMove(object sender, MouseEventArgs e)
@@ -206,14 +201,13 @@ namespace allinthebox
             {
                 mouseX = MousePosition.X - grabX;
                 mouseY = MousePosition.Y - grabY;
-                this.SetDesktopLocation(mouseX, mouseY);
+                SetDesktopLocation(mouseX, mouseY);
             }
         }
 
         private void bg_MouseUp(object sender, MouseEventArgs e)
         {
             mousedown = false;
-
         }
     }
 }

@@ -1,25 +1,59 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace Design
 {
     public class CustomRadioButton : RadioButton
     {
+        private Color _f;
+
+        private Color _n;
+
+        private Font _TextFont;
+
+        private bool hover;
+
         public CustomRadioButton()
         {
-            _TextFont = this.Font;
+            _TextFont = Font;
             _n = _f = Color.White;
-            this.CheckedChanged += CustomRadioButton_CheckedChanged;
-            this.MouseEnter += CustomRadioButton_MouseEnter;
-            this.MouseLeave += CustomRadioButton_MouseLeave;
+            CheckedChanged += CustomRadioButton_CheckedChanged;
+            MouseEnter += CustomRadioButton_MouseEnter;
+            MouseLeave += CustomRadioButton_MouseLeave;
         }
 
-        bool hover = false;
+        public Font TextFont
+        {
+            get => _TextFont;
+            set
+            {
+                _TextFont = value;
+                Invalidate();
+            }
+        }
+
+        public Color RadioColor
+        {
+            get => _n;
+            set
+            {
+                _n = value;
+                Invalidate();
+            }
+        }
+
+        public Color HoverRadioColor
+        {
+            get => _f;
+            set
+            {
+                _f = value;
+                Invalidate();
+            }
+        }
+
         private void CustomRadioButton_MouseLeave(object sender, EventArgs e)
         {
             hover = false;
@@ -35,50 +69,28 @@ namespace Design
             Invalidate();
         }
 
-        Font _TextFont;
-        public Font TextFont{
-            get { return _TextFont; }
-            set { _TextFont = value;Invalidate(); }
-        }
-
-        Color _n;
-        public Color RadioColor {
-            get { return _n; }
-            set { _n = value;Invalidate(); }
-        }
-
-        Color _f;
-        public Color HoverRadioColor
-        {
-            get { return _f; }
-            set { _f = value; Invalidate(); }
-        }
-
         protected override void OnPaint(PaintEventArgs pevent)
         {
             base.OnPaint(pevent);
 
-            using (Brush b = new SolidBrush(this.BackColor), a = new SolidBrush(hover?_f:_n))
+            using (Brush b = new SolidBrush(BackColor), a = new SolidBrush(hover ? _f : _n))
             {
-                pevent.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                pevent.Graphics.FillRectangle(b, new Rectangle(-1, -1, this.Width+2, this.Height+2));
-                pevent.Graphics.DrawEllipse(new Pen(a, 1.6f), new Rectangle(3, (this.Height - 12) / 2, 12, 12));
+                pevent.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+                pevent.Graphics.FillRectangle(b, new Rectangle(-1, -1, Width + 2, Height + 2));
+                pevent.Graphics.DrawEllipse(new Pen(a, 1.6f), new Rectangle(3, (Height - 12) / 2, 12, 12));
 
-                if (this.Checked)
-                    pevent.Graphics.FillEllipse(a, new Rectangle(6, (this.Height - 6) / 2, 6, 6));
+                if (Checked)
+                    pevent.Graphics.FillEllipse(a, new Rectangle(6, (Height - 6) / 2, 6, 6));
                 else
-                    pevent.Graphics.FillEllipse(b, new Rectangle(6, (this.Height - 6) / 2, 6, 6));
+                    pevent.Graphics.FillEllipse(b, new Rectangle(6, (Height - 6) / 2, 6, 6));
 
 
-                float s = pevent.Graphics.MeasureString(this.Text, this._TextFont).Height;
-                pevent.Graphics.DrawString(this.Text, this._TextFont, new SolidBrush(this.ForeColor), new PointF(18,(this.Height-s)/2));
+                var s = pevent.Graphics.MeasureString(Text, _TextFont).Height;
+                pevent.Graphics.DrawString(Text, _TextFont, new SolidBrush(ForeColor),
+                    new PointF(18, (Height - s) / 2));
 
-                pevent.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
+                pevent.Graphics.SmoothingMode = SmoothingMode.Default;
             }
         }
-
-
-
-        
     }
 }

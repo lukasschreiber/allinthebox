@@ -1,77 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Drawing.Text;
 using System.Reflection;
-using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace Design
 {
     public partial class SimpleComboBox : DropDownControl
     {
+        public delegate void SelectedIndexChangedHandler(object sender, EventArgs e);
+
+        private static readonly int dropItemHeight = 22;
 
         public List<string> Items = new List<string>();
-
-        private static int dropItemHeight = 22;
 
 
         public SimpleComboBox()
         {
-
             InitializeComponent();
 
             InitializeDropDown(drop);
 
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
-            | BindingFlags.Instance | BindingFlags.NonPublic, null,
-            panel1, new object[] { true });
+                                                         | BindingFlags.Instance | BindingFlags.NonPublic, null,
+                panel1, new object[] {true});
             SetDoubleBuffered(panel1);
             SetDoubleBuffered(drop);
             SetDoubleBuffered(customScrollbar1);
 
-            this.BackColor = this.panel1.BackColor;
+            BackColor = panel1.BackColor;
 
             CalculateScrollBar();
-            this.panel1.MouseWheel += Panel1_MouseWheel;
-            this.panel1.MouseHover += Panel1_MouseHover;
-            this.OnDropDown += SimpleComboBox_OnDropDown;
-            this.Load += SimpleComboBox_Load; ;
+            panel1.MouseWheel += Panel1_MouseWheel;
+            panel1.MouseHover += Panel1_MouseHover;
+            OnDropDown += SimpleComboBox_OnDropDown;
+            Load += SimpleComboBox_Load;
+            ;
         }
 
         private void SimpleComboBox_Load(object sender, EventArgs e)
         {
-            this.ClearAllItems();
-            
-            this.AddItem("");
+            ClearAllItems();
+
+            AddItem("");
         }
 
-
-        public delegate void SelectedIndexChangedHandler(object sender, EventArgs e);
         public event SelectedIndexChangedHandler OnSelectedIndexChanged;
 
-        
+
         private void SimpleComboBox_OnDropDown(object sender, EventArgs e)
         {
-            this.ClearAllItems();
-            foreach (String s in Items) {
-                this.AddItem(s);
-            }
+            ClearAllItems();
+            foreach (var s in Items) AddItem(s);
 
-            int wconst = 0;
+            var wconst = 0;
             if (panel1.Controls.Count > 10)
-            {
                 wconst = 10;
-            }
             else
-            {
                 wconst = panel1.Controls.Count;
-            }
 
             DropDownHeight = wconst * dropItemHeight;
             DropDownWidth = Width;
@@ -80,106 +67,114 @@ namespace Design
         }
 
 
-        private void CalculateScrollBar() {
-            Point pt = new Point(this.panel1.AutoScrollPosition.X, this.panel1.AutoScrollPosition.Y);
-            this.customScrollbar1.Minimum = 0;
-            this.customScrollbar1.Maximum = (this.panel1.Controls.Count+1) * dropItemHeight;
-            this.customScrollbar1.LargeChange = customScrollbar1.Maximum / customScrollbar1.Height + this.panel1.Height;
-            double sc = this.panel1.Controls.Count == 0 ? customScrollbar1.Maximum : customScrollbar1.Maximum / this.panel1.Controls.Count+1;
-            this.customScrollbar1.SmallChange = (int)Math.Round(sc/2);
-            this.customScrollbar1.Value = Math.Abs(this.panel1.AutoScrollPosition.Y);
+        private void CalculateScrollBar()
+        {
+            var pt = new Point(panel1.AutoScrollPosition.X, panel1.AutoScrollPosition.Y);
+            customScrollbar1.Minimum = 0;
+            customScrollbar1.Maximum = (panel1.Controls.Count + 1) * dropItemHeight;
+            customScrollbar1.LargeChange = customScrollbar1.Maximum / customScrollbar1.Height + panel1.Height;
+            double sc = panel1.Controls.Count == 0
+                ? customScrollbar1.Maximum
+                : customScrollbar1.Maximum / panel1.Controls.Count + 1;
+            customScrollbar1.SmallChange = (int) Math.Round(sc / 2);
+            customScrollbar1.Value = Math.Abs(panel1.AutoScrollPosition.Y);
             checkScrollBarNeeded();
         }
 
-        private void checkScrollBarNeeded() {
-            if (panel1.Controls.Count * dropItemHeight <= panel1.Height) this.customScrollbar1.Hide();
-            else this.customScrollbar1.Show();
+        private void checkScrollBarNeeded()
+        {
+            if (panel1.Controls.Count * dropItemHeight <= panel1.Height) customScrollbar1.Hide();
+            else customScrollbar1.Show();
         }
 
-        public void AddItem(string s, Color c) {
+        public void AddItem(string s, Color c)
+        {
             new DropDownItem(this, s, c);
-          
         }
 
-        public void AddItem(string s) {
-            AddItem(s, this.ForeColor);
+        public void AddItem(string s)
+        {
+            AddItem(s, ForeColor);
         }
 
-        public void ClearAllItems() {
+        public void ClearAllItems()
+        {
             SuspendLayout();
-            this.panel1.Controls.Clear();
-            this.RefreshDropDown();
+            panel1.Controls.Clear();
+            RefreshDropDown();
             ResumeLayout();
         }
 
 
-        public void ScrollTo(String s)
+        public void ScrollTo(string s)
         {
             try
             {
-                DropDownItem last = (DropDownItem)panel1.Controls[panel1.Controls.Count - 1];
-                Control c = panel1.Controls.Find(last.TextHolder.Text, true).First();
+                var last = (DropDownItem) panel1.Controls[panel1.Controls.Count - 1];
+                var c = panel1.Controls.Find(last.TextHolder.Text, true).First();
                 panel1.ScrollControlIntoView(c);
-                this.customScrollbar1.Value = Math.Abs(this.panel1.AutoScrollPosition.Y);
+                customScrollbar1.Value = Math.Abs(panel1.AutoScrollPosition.Y);
 
-                Control d = panel1.Controls.Find(s, true).First();
+                var d = panel1.Controls.Find(s, true).First();
                 panel1.ScrollControlIntoView(d);
-                this.customScrollbar1.Value = Math.Abs(this.panel1.AutoScrollPosition.Y);
-
+                customScrollbar1.Value = Math.Abs(panel1.AutoScrollPosition.Y);
             }
-            catch {
+            catch
+            {
                 panel1.AutoScrollPosition = new Point(0, 0);
-                this.customScrollbar1.Value = Math.Abs(this.panel1.AutoScrollPosition.Y);
+                customScrollbar1.Value = Math.Abs(panel1.AutoScrollPosition.Y);
             }
         }
 
-        public void ScrollToBottom() {
-            if (Controls.Count > 0) {
+        public void ScrollToBottom()
+        {
+            if (Controls.Count > 0)
+            {
                 panel1.ScrollControlIntoView(panel1.Controls[panel1.Controls.Count - 1]);
-                this.customScrollbar1.Value = Math.Abs(this.panel1.AutoScrollPosition.Y);
+                customScrollbar1.Value = Math.Abs(panel1.AutoScrollPosition.Y);
             }
         }
 
         private void Panel1_MouseHover(object sender, EventArgs e)
         {
-            this.panel1.Focus();
+            panel1.Focus();
         }
 
         private void Panel1_MouseWheel(object sender, MouseEventArgs e)
         {
-            this.customScrollbar1.Value = Math.Abs(this.panel1.AutoScrollPosition.Y);
+            customScrollbar1.Value = Math.Abs(panel1.AutoScrollPosition.Y);
         }
 
         private void customScrollbar1_Scroll(object sender, EventArgs e)
         {
-            
-            this.panel1.AutoScrollPosition = new Point(0, this.customScrollbar1.Value);
+            panel1.AutoScrollPosition = new Point(0, customScrollbar1.Value);
             Application.DoEvents();
         }
 
-        public static void SetDoubleBuffered(System.Windows.Forms.Control c)
+        public static void SetDoubleBuffered(Control c)
         {
-            if (System.Windows.Forms.SystemInformation.TerminalServerSession)
+            if (SystemInformation.TerminalServerSession)
                 return;
 
-            System.Reflection.PropertyInfo aProp =
-                  typeof(System.Windows.Forms.Control).GetProperty(
-                        "DoubleBuffered",
-                        System.Reflection.BindingFlags.NonPublic |
-                        System.Reflection.BindingFlags.Instance);
+            var aProp =
+                typeof(Control).GetProperty(
+                    "DoubleBuffered",
+                    BindingFlags.NonPublic |
+                    BindingFlags.Instance);
 
             aProp.SetValue(c, true, null);
         }
 
-        public class DropDownItem : Panel {
+        public class DropDownItem : Panel
+        {
+            private readonly Color c;
+            private readonly SimpleComboBox p;
+            private readonly string s;
 
             public Label TextHolder = new Label();
-            SimpleComboBox p;
-            string s;
-            Color c;
 
-            public DropDownItem(SimpleComboBox _parent, string _s, Color _c) {
-
+            public DropDownItem(SimpleComboBox _parent, string _s, Color _c)
+            {
                 p = _parent;
                 c = _c;
                 s = _s;
@@ -187,14 +182,15 @@ namespace Design
                 init();
             }
 
-            private void init() {
-                Font font = new Font("Century Gothic", 8.25f, FontStyle.Regular);
+            private void init()
+            {
+                var font = new Font("Century Gothic", 8.25f, FontStyle.Regular);
 
-                this.Width = p.Right;
-                this.Height = dropItemHeight;
-                this.Margin = new Padding(0, 0, 0, 0);
-                this.Padding = new Padding(0, 0, 0, 0);
-                this.BorderStyle = BorderStyle.None;
+                Width = p.Right;
+                Height = dropItemHeight;
+                Margin = new Padding(0, 0, 0, 0);
+                Padding = new Padding(0, 0, 0, 0);
+                BorderStyle = BorderStyle.None;
 
                 TextHolder.Margin = new Padding(5, 0, 3, 0);
                 TextHolder.Text = s;
@@ -204,16 +200,15 @@ namespace Design
                 TextHolder.Size = new Size(Width, Height);
                 TextHolder.Font = font;
                 TextHolder.BorderStyle = BorderStyle.None;
-                SimpleComboBox.SetDoubleBuffered(this);
-                this.TextHolder.MouseEnter += DropDownItem_MouseHover;
-                this.TextHolder.MouseLeave += TextHolder_MouseLeave;
-                this.TextHolder.Click += TextHolder_Click;
-                this.TextHolder.GotFocus += TextHolder_GotFocus;
-                this.TextHolder.LostFocus += TextHolder_LostFocus;
-                this.Controls.Add(TextHolder);
+                SetDoubleBuffered(this);
+                TextHolder.MouseEnter += DropDownItem_MouseHover;
+                TextHolder.MouseLeave += TextHolder_MouseLeave;
+                TextHolder.Click += TextHolder_Click;
+                TextHolder.GotFocus += TextHolder_GotFocus;
+                TextHolder.LostFocus += TextHolder_LostFocus;
+                Controls.Add(TextHolder);
 
                 p.panel1.Controls.Add(this);
-                
             }
 
             private void TextHolder_LostFocus(object sender, EventArgs e)
@@ -228,7 +223,7 @@ namespace Design
 
             private void TextHolder_Click(object sender, EventArgs e)
             {
-                p.inputText.Text = this.TextHolder.Text;
+                p.inputText.Text = TextHolder.Text;
                 p.inputText.Select(p.inputText.Text.Length, 0);
                 if (p.OnSelectedIndexChanged == null) return;
                 p.OnSelectedIndexChanged(this, new EventArgs());
@@ -237,14 +232,14 @@ namespace Design
 
             private void TextHolder_MouseLeave(object sender, EventArgs e)
             {
-                this.TextHolder.BackColor = Color.FromArgb(255, 255, 255);
-                this.TextHolder.ForeColor = Color.Black;
+                TextHolder.BackColor = Color.FromArgb(255, 255, 255);
+                TextHolder.ForeColor = Color.Black;
             }
 
             private void DropDownItem_MouseHover(object sender, EventArgs e)
             {
-                this.TextHolder.BackColor = Color.FromArgb(0,96,170);
-                this.TextHolder.ForeColor = Color.White;
+                TextHolder.BackColor = Color.FromArgb(0, 96, 170);
+                TextHolder.ForeColor = Color.White;
             }
         }
     }

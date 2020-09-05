@@ -1,28 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Management;
+using System.Reflection;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using System.Xml;
+using System.Xml.Linq;
+using allinthebox.Properties;
 
 namespace allinthebox
 {
-    using MetroFramework.Forms;
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Management;
-    using System.Reflection;
-
     public partial class login_form : Form
     {
+        public const int WM_KEYDOWN = 0x0100;
         public string currentStyle;
+        private int grabX, grabY;
+        public bool loginOK;
+        public Main main;
+        private bool mousedown, maximized;
+
+        private int mouseX, mouseY;
+
+        public string shouldPass;
+        public string tempUser;
+        public bool usb_detected;
+        public ManagementEventWatcher watcher = new ManagementEventWatcher();
 
         public login_form()
         {
@@ -30,68 +32,70 @@ namespace allinthebox
             InitializeComponent();
 
             //language
-            this.label1.Text = Properties.strings.username + ":";
-            this.label2.Text = Properties.strings.password + ":";
-            this.label3.Text = Properties.strings.useUSB;
-            this.exit.ButtonText = Properties.strings.exit;
-            this.open.ButtonText = Properties.strings.login;
+            label1.Text = strings.username + ":";
+            label2.Text = strings.password + ":";
+            label3.Text = strings.useUSB;
+            exit.ButtonText = strings.exit;
+            open.ButtonText = strings.login;
 
             //version
             /*System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             string version = fvi.FileVersion;*/
-            Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-            this.VersionLabel.Text = "v" + version;
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            VersionLabel.Text = "v" + version;
 
-            this.CenterToScreen();
-            this.errorText.Text = "";
+            CenterToScreen();
+            errorText.Text = "";
             main = new Main();
 
             //load style
             currentStyle = main.loadSettingsDataBase().SelectSingleNode("/settings/style").InnerXml;
 
-            ColorConverter cc = new ColorConverter();
+            var cc = new ColorConverter();
 
             #region style
+
             //load colors and images
 
             if (Style.iconStyle == Style.IconStyle.DARK)
             {
-                this.bunifuImageButton1.Image = allinthebox.Properties.Resources.eye_white;
-                this.closeButton.Image = allinthebox.Properties.Resources.close_white;
+                bunifuImageButton1.Image = Resources.eye_white;
+                closeButton.Image = Resources.close_white;
             }
-            else {
-                this.bunifuImageButton1.Image = allinthebox.Properties.Resources.eye_grey;
-                this.closeButton.Image = allinthebox.Properties.Resources.close;
+            else
+            {
+                bunifuImageButton1.Image = Resources.eye_grey;
+                closeButton.Image = Resources.close;
             }
 
-            this.BackColor = Style.get("login/backColor");
-            this.password.BackColor = this.userName.BackColor = this.BackColor;
-            this.exit.BackColor = BackColor;
-            this.open.BackColor = BackColor;
-            this.exit.IdleLineColor = this.open.IdleLineColor = Style.get("login/buttonBorder");
-            this.exit.ActiveForecolor = this.open.ActiveForecolor = Style.get("login/activeText");
-            this.exit.IdleForecolor = this.open.IdleForecolor = Style.get("login/buttonText");
-            this.exit.IdleFillColor = this.open.IdleFillColor = Style.get("login/buttonBack");
-            this.password.LineFocusedColor = this.userName.LineFocusedColor = Style.get("login/lineActiveColor");
-            this.exit.ActiveFillColor = this.open.ActiveFillColor = Style.get("login/buttonActiveColor");
+            BackColor = Style.get("login/backColor");
+            password.BackColor = userName.BackColor = BackColor;
+            exit.BackColor = BackColor;
+            open.BackColor = BackColor;
+            exit.IdleLineColor = open.IdleLineColor = Style.get("login/buttonBorder");
+            exit.ActiveForecolor = open.ActiveForecolor = Style.get("login/activeText");
+            exit.IdleForecolor = open.IdleForecolor = Style.get("login/buttonText");
+            exit.IdleFillColor = open.IdleFillColor = Style.get("login/buttonBack");
+            password.LineFocusedColor = userName.LineFocusedColor = Style.get("login/lineActiveColor");
+            exit.ActiveFillColor = open.ActiveFillColor = Style.get("login/buttonActiveColor");
 
-            this.open.Refresh();
-            this.exit.Refresh();
+            open.Refresh();
+            exit.Refresh();
 
-            this.userName.ForeColor =this.userName.HintForeColor = Style.get("login/textColorInput");
-            this.password.ForeColor =this.password.HintForeColor= Style.get("login/textColorInput");
-            this.password.LineIdleColor =this.password.LineMouseHoverColor = this.userName.LineMouseHoverColor = this.userName.LineIdleColor = Style.get("login/lineColor");
-            this.userName.Refresh();
-            this.password.Refresh();
+            userName.ForeColor = userName.HintForeColor = Style.get("login/textColorInput");
+            password.ForeColor = password.HintForeColor = Style.get("login/textColorInput");
+            password.LineIdleColor = password.LineMouseHoverColor =
+                userName.LineMouseHoverColor = userName.LineIdleColor = Style.get("login/lineColor");
+            userName.Refresh();
+            password.Refresh();
 
-            this.label1.ForeColor =this.label2.ForeColor = this.label3.ForeColor = Style.get("login/textColor");
-            this.label1.Refresh();
-            this.label2.Refresh();
-            this.label3.Refresh();
+            label1.ForeColor = label2.ForeColor = label3.ForeColor = Style.get("login/textColor");
+            label1.Refresh();
+            label2.Refresh();
+            label3.Refresh();
 
             #endregion
-
         }
 
         //create frame shadow fpr better contrast
@@ -100,29 +104,20 @@ namespace allinthebox
             get
             {
                 const int CS_DROPSHADOW = 0x20000;
-                CreateParams cp = base.CreateParams;
+                var cp = base.CreateParams;
                 cp.ClassStyle |= CS_DROPSHADOW;
                 return cp;
             }
         }
 
-        public const int WM_KEYDOWN = 0x0100;
-
-        public String shouldPass;
-        public Main main;
-        public ManagementEventWatcher watcher = new ManagementEventWatcher();
-        public Boolean usb_detected = false;
-        public Boolean loginOK = false;
-        public String tempUser;
-
         //check if credentials are correct
         public void checkLogIn()
         {
             //ignore case
-            String user = userName.Text.ToLower();
+            var user = userName.Text.ToLower();
 
             //encrypt with MD5
-            String pass = Main.GetHashString(password.Text);
+            var pass = Main.GetHashString(password.Text);
 
             loadUserData();
 
@@ -130,22 +125,18 @@ namespace allinthebox
             if (user != "" && pass != "")
             {
                 if (loginOK)
-                {
                     open_main();
-                  
-                }
                 else
-                {
-                    this.errorText.Text = Properties.strings.errorCredentialsWrong;
-                }
+                    errorText.Text = strings.errorCredentialsWrong;
             }
             else
             {
-                this.errorText.Text = Properties.strings.errorEmpty;
+                errorText.Text = strings.errorEmpty;
             }
         }
 
-        public string getUserName() {
+        public string getUserName()
+        {
             return userName.Text;
         }
 
@@ -154,117 +145,102 @@ namespace allinthebox
         {
             var usbDevices = GetUSBDevices();
 
-            foreach (var usbDevice in usbDevices)
-            {
-                loadUSBData(usbDevice.DeviceID);
-            }
+            foreach (var usbDevice in usbDevices) loadUSBData(usbDevice.DeviceID);
 
-            if (usb_detected)
-            {
-
-                open_main();
-                
-            }
+            if (usb_detected) open_main();
         }
 
-        private void loadUSBData(String pid) {
+        private void loadUSBData(string pid)
+        {
             XDocument doc;
-            
+
             doc = XDocument.Load(FileManager.GetDataBasePath(FileManager.NAMES.USER));
 
             foreach (var user in doc.Descendants("data"))
+            foreach (var dm in doc.Descendants("user"))
             {
-                foreach (var dm in doc.Descendants("user"))
+                tempUser = dm.Element("userName").Value;
+                var tempPass = dm.Element("pass").Value;
+
+
+                if (pid == dm.Element("pid").Value)
                 {
+                    var document = new XmlDocument();
+                    document.Load(FileManager.GetDataBasePath(FileManager.NAMES.SESSION));
 
-                    tempUser = dm.Element("userName").Value;
-                    String tempPass = dm.Element("pass").Value;
-                    
-
-                    if (pid == dm.Element("pid").Value)
-                    {
-                        XmlDocument document = new XmlDocument();
-                        document.Load(FileManager.GetDataBasePath(FileManager.NAMES.SESSION));
-
-                        String XPathName = "/list/session/name";
-                        XmlNode node_name = document.SelectSingleNode(XPathName);
-                        node_name.InnerXml = tempUser;
-                        document.Save(FileManager.GetDataBasePath(FileManager.NAMES.SESSION));
-                        usb_detected = true;
-                    }
+                    var XPathName = "/list/session/name";
+                    var node_name = document.SelectSingleNode(XPathName);
+                    node_name.InnerXml = tempUser;
+                    document.Save(FileManager.GetDataBasePath(FileManager.NAMES.SESSION));
+                    usb_detected = true;
                 }
             }
         }
 
         private void loadUserData()
         {
-
             XDocument doc;
             doc = XDocument.Load(FileManager.GetDataBasePath(FileManager.NAMES.USER));
 
             foreach (var user in doc.Descendants("data"))
+            foreach (var dm in doc.Descendants("user"))
             {
-                foreach (var dm in doc.Descendants("user"))
+                tempUser = dm.Element("userName").Value;
+                var tempPass = dm.Element("pass").Value;
+
+                if (tempUser.ToLower() == userName.Text.ToLower() && tempPass == Main.GetHashString(password.Text))
                 {
-
-                    tempUser = dm.Element("userName").Value;
-                    String tempPass = dm.Element("pass").Value;
-
-                    if (tempUser.ToLower() == userName.Text.ToLower() && tempPass == Main.GetHashString(password.Text))
-                    {
-                        loginOK = true;
-                        XmlDocument document = new XmlDocument();
-                        document.Load(FileManager.GetDataBasePath(FileManager.NAMES.SESSION));
+                    loginOK = true;
+                    var document = new XmlDocument();
+                    document.Load(FileManager.GetDataBasePath(FileManager.NAMES.SESSION));
 
 
-                        String XPathName = "/list/session/name";
-                        XmlNode node_name = document.SelectSingleNode(XPathName);
-                        node_name.InnerXml = tempUser;
-                        document.Save(FileManager.GetDataBasePath(FileManager.NAMES.SESSION));
-                    }
+                    var XPathName = "/list/session/name";
+                    var node_name = document.SelectSingleNode(XPathName);
+                    node_name.InnerXml = tempUser;
+                    document.Save(FileManager.GetDataBasePath(FileManager.NAMES.SESSION));
                 }
             }
         }
 
         private void login_form_Load(object sender, EventArgs e)
         {
-            WqlEventQuery query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2");
-            watcher.EventArrived += new EventArrivedEventHandler(watcher_EventArrived);
+            var query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2");
+            watcher.EventArrived += watcher_EventArrived;
             watcher.Query = query;
             watcher.Start();
         }
 
-        private void open_main() {
-
-            Delegate d = new MethodInvoker(this.Hide);
-            this.Invoke(d);
+        private void open_main()
+        {
+            Delegate d = new MethodInvoker(Hide);
+            Invoke(d);
 
             Delegate ms = new MethodInvoker(main.Show);
-            this.Invoke(ms);
+            Invoke(ms);
         }
 
         public static List<USBDeviceInfo> GetUSBDevices()
         {
-            List<USBDeviceInfo> devices = new List<USBDeviceInfo>();
+            var devices = new List<USBDeviceInfo>();
 
             ManagementObjectCollection collection;
             using (var searcher = new ManagementObjectSearcher(@"Select * From Win32_Volume"))
+            {
                 collection = searcher.Get();
+            }
 
             foreach (var device in collection)
-            {
-                if ((UInt32)device.GetPropertyValue("DriveType") >= 0x2 && (UInt32)device.GetPropertyValue("DriveType") <= 0x3 && (string)device.GetPropertyValue("Label") != null)
-                {
+                if ((uint) device.GetPropertyValue("DriveType") >= 0x2 &&
+                    (uint) device.GetPropertyValue("DriveType") <= 0x3 &&
+                    (string) device.GetPropertyValue("Label") != null)
                     devices.Add(new USBDeviceInfo(
-                    (string)device.GetPropertyValue("DeviceID"),
-                    (string)device.GetPropertyValue("Label"),
-                    (string)device.GetPropertyValue("Name"),
-                    (UInt32)device.GetPropertyValue("DriveType"),
-                    (Boolean)device.GetPropertyValue("BootVolume")
+                        (string) device.GetPropertyValue("DeviceID"),
+                        (string) device.GetPropertyValue("Label"),
+                        (string) device.GetPropertyValue("Name"),
+                        (uint) device.GetPropertyValue("DriveType"),
+                        (bool) device.GetPropertyValue("BootVolume")
                     ));
-                }
-                
-            }
 
             collection.Dispose();
             return devices;
@@ -272,55 +248,44 @@ namespace allinthebox
 
         private void login_form_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) {
-                checkLogIn();
-            }
+            if (e.KeyCode == Keys.Enter) checkLogIn();
         }
 
         private void password_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                checkLogIn();
-            }
+            if (e.KeyCode == Keys.Enter) checkLogIn();
         }
 
         private void password_OnValueChanged(object sender, EventArgs e)
         {
-            this.errorText.Text = "";
+            errorText.Text = "";
             password.isPassword = true;
-            String user = userName.Text;
-            String passField = password.Text;
-            String pass = Main.GetHashString(password.Text);
-           
+            var user = userName.Text;
+            var passField = password.Text;
+            var pass = Main.GetHashString(password.Text);
         }
 
         private void userName_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                checkLogIn();
-            }
+            if (e.KeyCode == Keys.Enter) checkLogIn();
         }
 
         private void userName_OnValueChanged(object sender, EventArgs e)
         {
-            this.errorText.Text = "";
-            String user = userName.Text;
-            String passField = password.Text;
-            String pass = Main.GetHashString(password.Text);
-      
+            errorText.Text = "";
+            var user = userName.Text;
+            var passField = password.Text;
+            var pass = Main.GetHashString(password.Text);
         }
 
         private void exit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void open_Click(object sender, EventArgs e)
         {
             checkLogIn();
-
         }
 
         private void bunifuImageButton1_MouseEnter(object sender, EventArgs e)
@@ -335,42 +300,32 @@ namespace allinthebox
 
         private void closeButton_Click(object sender, EventArgs e)
         {
-            MouseEventArgs me = (MouseEventArgs)e;
-            if (me.Button == MouseButtons.Left) {
-                this.Close();
-            }
+            var me = (MouseEventArgs) e;
+            if (me.Button == MouseButtons.Left) Close();
         }
 
         private void closeButton_MouseEnter(object sender, EventArgs e)
         {
-            ToolTip tt = new ToolTip();
-            tt.SetToolTip(this.closeButton, "Schließen");
-            this.closeButton.BackColor = Color.FromArgb(223, 1, 1);
-            this.closeButton.Image = allinthebox.Properties.Resources.close_white;
+            var tt = new ToolTip();
+            tt.SetToolTip(closeButton, "Schließen");
+            closeButton.BackColor = Color.FromArgb(223, 1, 1);
+            closeButton.Image = Resources.close_white;
         }
 
         private void closeButton_MouseLeave(object sender, EventArgs e)
         {
-            this.closeButton.BackColor = Color.Transparent;
+            closeButton.BackColor = Color.Transparent;
             if (Style.iconStyle == Style.IconStyle.LIGHT)
-            {
-                this.closeButton.Image = allinthebox.Properties.Resources.close;
-            }
+                closeButton.Image = Resources.close;
             else
-            {
-                this.closeButton.Image = allinthebox.Properties.Resources.close_white;
-            }
+                closeButton.Image = Resources.close_white;
         }
-
-        int mouseX = 0, mouseY = 0;
-        bool mousedown, maximized;
-        int grabX = 0, grabY = 0;
 
         private void login_form_MouseDown(object sender, MouseEventArgs e)
         {
             mousedown = true;
-            grabX = (MousePosition.X - this.DesktopLocation.X);
-            grabY = (MousePosition.Y - this.DesktopLocation.Y);
+            grabX = MousePosition.X - DesktopLocation.X;
+            grabY = MousePosition.Y - DesktopLocation.Y;
         }
 
         private void login_form_MouseMove(object sender, MouseEventArgs e)
@@ -379,32 +334,31 @@ namespace allinthebox
             {
                 mouseX = MousePosition.X - grabX;
                 mouseY = MousePosition.Y - grabY;
-                this.SetDesktopLocation(mouseX, mouseY);
+                SetDesktopLocation(mouseX, mouseY);
             }
         }
 
         private void login_form_MouseUp(object sender, MouseEventArgs e)
         {
             mousedown = false;
-
         }
     }
 
     public class USBDeviceInfo
     {
-        public USBDeviceInfo(string deviceID, string label, string name, UInt32 type, Boolean bootVolume)
+        public USBDeviceInfo(string deviceID, string label, string name, uint type, bool bootVolume)
         {
-            this.DeviceID = deviceID;
-            this.Label = label;
-            this.Name = name;
-            this.Type = type;
-            this.BootVolume = bootVolume;
+            DeviceID = deviceID;
+            Label = label;
+            Name = name;
+            Type = type;
+            BootVolume = bootVolume;
         }
-        public string DeviceID { get; private set; }
-        public string Label { get; private set; }
-        public string Name { get; private set; }
-        public UInt32 Type { get; private set; }
-        public Boolean BootVolume { get; private set; }
 
+        public string DeviceID { get; }
+        public string Label { get; }
+        public string Name { get; }
+        public uint Type { get; }
+        public bool BootVolume { get; }
     }
 }

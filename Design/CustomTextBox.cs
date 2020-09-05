@@ -1,36 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Xml;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Design
 {
     public partial class CustomTextBox : UserControl
     {
-        private Color _BorderColor = Color.Black;
-        private Color _FocusBorderColor = Color.Blue;
-        private Color _HoverColor = Color.Gray;
-        private int _ResizeConst = 0;
-        private int _FocusResizeConst = 0;
-        private int _BorderThickness = 3;
+        private Rectangle buttonRect;
+        private bool hover;
+
+        public bool searchInAction = false;
 
         public CustomTextBox()
         {
             InitializeComponent();
-            this.DoubleBuffered = true;
-            this.textBox1.BackColor = this.BackColor;
-            this.Cursor = Cursors.IBeam;
-            this.textBox1.GotFocus += TextBox1_GotFocus;
-            this.textBox1.LostFocus += TextBox1_LostFocus;
-            this.textBox1.TextChanged += TextBox1_TextChanged;
-            this.textBox1.KeyUp += TextBox1_KeyUp;
+            DoubleBuffered = true;
+            textBox1.BackColor = BackColor;
+            Cursor = Cursors.IBeam;
+            textBox1.GotFocus += TextBox1_GotFocus;
+            textBox1.LostFocus += TextBox1_LostFocus;
+            textBox1.TextChanged += TextBox1_TextChanged;
+            textBox1.KeyUp += TextBox1_KeyUp;
         }
+
+        public Color BorderColor { get; set; } = Color.Black;
+
+        public Color FocusBorderColor { get; set; } = Color.Blue;
+
+        public Color HoverColor { get; set; } = Color.Gray;
+
+        public int BorderThickness { get; set; } = 3;
+
+
+        public int ResizeConst { get; set; } = 0;
+
+        public int FocusResizeConst { get; set; } = 0;
 
         private void TextBox1_KeyUp(object sender, KeyEventArgs e)
         {
@@ -39,19 +43,21 @@ namespace Design
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
-            if (this.textBox1.Text.Contains("-->")) {
-                int s = this.textBox1.SelectionStart;
-                this.textBox1.Text = this.textBox1.Text.Replace("-->", "→");
-                this.textBox1.Select(s, 0);
+            if (textBox1.Text.Contains("-->"))
+            {
+                var s = textBox1.SelectionStart;
+                textBox1.Text = textBox1.Text.Replace("-->", "→");
+                textBox1.Select(s, 0);
             }
-            this.Text = this.textBox1.Text;
+
+            Text = textBox1.Text;
             Invalidate();
         }
 
         protected override void OnTextChanged(EventArgs e)
         {
             base.OnTextChanged(e);
-            this.textBox1.Text = this.Text;
+            textBox1.Text = Text;
         }
 
         private void TextBox1_LostFocus(object sender, EventArgs e)
@@ -64,63 +70,20 @@ namespace Design
             Invalidate();
         }
 
-        public Color BorderColor
-        {
-            get { return _BorderColor; }
-            set { _BorderColor = value; }
-        }
-
-        public Color FocusBorderColor
-        {
-            get { return _FocusBorderColor; }
-            set { _FocusBorderColor = value; }
-        }
-
-        public Color HoverColor
-        {
-            get { return _HoverColor; }
-            set { _HoverColor = value; }
-        }
-
-        public int BorderThickness
-        {
-            get { return _BorderThickness; }
-            set { _BorderThickness = value; }
-        }
-
-      
-        public int ResizeConst
-        {
-            get { return _ResizeConst; }
-            set { _ResizeConst = value; }
-        }
-
-        public int FocusResizeConst
-        {
-            get { return _FocusResizeConst; }
-            set { _FocusResizeConst = value; }
-        }
-
-        public bool searchInAction = false;
-
-        private Rectangle buttonRect;
-        private bool hover = false;
-
         protected override void OnMouseClick(MouseEventArgs e)
         {
             base.OnMouseClick(e);
-            if (buttonRect.Contains(e.Location)) {
+            if (buttonRect.Contains(e.Location))
+            {
                 if (searchInAction)
-                {
                     OnResetClick();
-                }
-                else {
+                else
                     OnSearchClick();
-                }
             }
         }
 
-        public void Select(int a, int b) {
+        public void Select(int a, int b)
+        {
             textBox1.Select(a, b);
         }
 
@@ -128,43 +91,34 @@ namespace Design
 
         private void OnSearchClick()
         {
-            if (SearchClick != null)
-            {
-                SearchClick(this, EventArgs.Empty);
-            }
+            if (SearchClick != null) SearchClick(this, EventArgs.Empty);
         }
 
         public event EventHandler ResetClick;
 
         private void OnResetClick()
         {
-            if (ResetClick != null)
-            {
-                ResetClick(this, EventArgs.Empty);
-            }
+            if (ResetClick != null) ResetClick(this, EventArgs.Empty);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseEnter(e);
-            if (buttonRect != null) {
+            if (buttonRect != null)
+            {
                 if (buttonRect.Contains(e.Location))
                 {
-                    bool _hover = hover;
+                    var _hover = hover;
                     hover = true;
-                    this.Cursor = Cursors.Default;
-                    if (_hover != hover){
-                        Invalidate();
-                    }
-
+                    Cursor = Cursors.Default;
+                    if (_hover != hover) Invalidate();
                 }
-                else {
-                    bool _hover = hover;
+                else
+                {
+                    var _hover = hover;
                     hover = false;
-                    this.Cursor = Cursors.Default; 
-                    if (_hover != hover) {
-                        Invalidate();
-                    }
+                    Cursor = Cursors.Default;
+                    if (_hover != hover) Invalidate();
                 }
             }
         }
@@ -173,30 +127,25 @@ namespace Design
         {
             base.OnMouseLeave(e);
 
-            bool _hover = hover;
+            var _hover = hover;
             hover = false;
-            if (_hover != hover)
-            {
-                Invalidate();
-            }
+            if (_hover != hover) Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            
-            using (Brush b = new SolidBrush(this.textBox1.Focused ? _FocusBorderColor : _BorderColor))
-            {
-                e.Graphics.DrawRectangle(new Pen(b,_BorderThickness), new Rectangle(0, 0, this.Width - 1, this.Height - 1));
-            }
 
-            
+            using (Brush b = new SolidBrush(textBox1.Focused ? FocusBorderColor : BorderColor))
+            {
+                e.Graphics.DrawRectangle(new Pen(b, BorderThickness), new Rectangle(0, 0, Width - 1, Height - 1));
+            }
         }
 
         protected override void OnBackColorChanged(EventArgs e)
         {
             base.OnBackColorChanged(e);
-            this.textBox1.BackColor = this.BackColor;
+            textBox1.BackColor = BackColor;
         }
 
         protected override void OnResize(EventArgs e)
@@ -205,14 +154,14 @@ namespace Design
             CalcSize();
         }
 
-        private void CalcSize() {
-            this.textBox1.Height = this.Height - 2 * _BorderThickness - this.Padding.Top - this.Padding.Bottom;
-            this.textBox1.Width= this.Width - 2*_BorderThickness-this.Padding.Left-this.Padding.Right-3;
-            int s = (this.Height -(this.Padding.Bottom + this.Padding.Top + this.textBox1.Height))/2;
-            int t = this.Padding.Left+this.BorderThickness;
+        private void CalcSize()
+        {
+            textBox1.Height = Height - 2 * BorderThickness - Padding.Top - Padding.Bottom;
+            textBox1.Width = Width - 2 * BorderThickness - Padding.Left - Padding.Right - 3;
+            var s = (Height - (Padding.Bottom + Padding.Top + textBox1.Height)) / 2;
+            var t = Padding.Left + BorderThickness;
 
-            this.textBox1.Location = new Point(t, s);
-
+            textBox1.Location = new Point(t, s);
         }
     }
 }

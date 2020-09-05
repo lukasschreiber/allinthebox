@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using allinthebox.Properties;
 
 namespace allinthebox
 {
     public partial class add_user : Form
     {
-        private userManager um;
+        private int grabX, grabY;
+        private bool mousedown, maximized;
+
+        private int mouseX, mouseY;
+        private readonly userManager um;
 
         public add_user(userManager userManager)
         {
@@ -21,32 +20,43 @@ namespace allinthebox
             InitializeComponent();
 
             //language
-            this.label4.Text = Properties.strings.add;
-            this.add.Text = Properties.strings.addButton;
+            label4.Text = strings.add;
+            add.Text = strings.addButton;
 
             user_box.ForeColor = SystemColors.GrayText;
-            user_box.Text = Properties.strings.username;
-            this.user_box.Leave += new System.EventHandler(this.user_box_Leave);
-            this.user_box.Enter += new System.EventHandler(this.user_box_Enter);
+            user_box.Text = strings.username;
+            user_box.Leave += user_box_Leave;
+            user_box.Enter += user_box_Enter;
 
             pass_box.ForeColor = SystemColors.GrayText;
-            pass_box.Text = Properties.strings.password;
-            this.pass_box.Leave += new System.EventHandler(this.pass_box_Leave);
-            this.pass_box.Enter += new System.EventHandler(this.pass_box_Enter);
+            pass_box.Text = strings.password;
+            pass_box.Leave += pass_box_Leave;
+            pass_box.Enter += pass_box_Enter;
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int CS_DROPSHADOW = 0x20000;
+                var cp = base.CreateParams;
+                cp.ClassStyle |= CS_DROPSHADOW;
+                return cp;
+            }
         }
 
         private void user_box_Leave(object sender, EventArgs e)
         {
             if (user_box.Text.Length == 0)
             {
-                user_box.Text = Properties.strings.username;
+                user_box.Text = strings.username;
                 user_box.ForeColor = SystemColors.GrayText;
             }
         }
 
         private void user_box_Enter(object sender, EventArgs e)
         {
-            if (user_box.Text == Properties.strings.username)
+            if (user_box.Text == strings.username)
             {
                 user_box.Text = "";
                 user_box.ForeColor = SystemColors.WindowText;
@@ -55,14 +65,12 @@ namespace allinthebox
 
         private void pass_box_Leave(object sender, EventArgs e)
         {
-            if (pass_box.Text.Length == 0) {
-                pass_box.Text = Properties.strings.password;
-            }
+            if (pass_box.Text.Length == 0) pass_box.Text = strings.password;
         }
 
         private void pass_box_Enter(object sender, EventArgs e)
         {
-            if (pass_box.Text == Properties.strings.password)
+            if (pass_box.Text == strings.password)
             {
                 pass_box.Text = "";
                 pass_box.ForeColor = SystemColors.WindowText;
@@ -71,20 +79,18 @@ namespace allinthebox
 
         private void add_Click(object sender, EventArgs e)
         {
-            if (pass_box.Text != "" && user_box.Text != "" && pass_box.Text != Properties.strings.password && user_box.Text != Properties.strings.username)
+            if (pass_box.Text != "" && user_box.Text != "" && pass_box.Text != strings.password &&
+                user_box.Text != strings.username)
             {
-                bool namingViolation = false;
-                String spath = FileManager.GetDataBasePath(FileManager.NAMES.USER);
-                XDocument doc = XDocument.Load(spath);
-                foreach (XElement node in doc.Element("data").Elements("user")) {
-                    if (node.Element("userName").Value.ToLower() ==user_box.Text.ToLower())
-                    {
+                var namingViolation = false;
+                var spath = FileManager.GetDataBasePath(FileManager.NAMES.USER);
+                var doc = XDocument.Load(spath);
+                foreach (var node in doc.Element("data").Elements("user"))
+                    if (node.Element("userName").Value.ToLower() == user_box.Text.ToLower())
                         namingViolation = true;
-                    }
-                }
                 if (!namingViolation)
                 {
-                    XElement root = new XElement("user");
+                    var root = new XElement("user");
                     root.Add(new XElement("userName", user_box.Text));
                     root.Add(new XElement("pass", Main.GetHashString(pass_box.Text)));
                     root.Add(new XElement("pid", ""));
@@ -95,13 +101,14 @@ namespace allinthebox
                     um.uRefresh();
                     um.Focus();
                 }
-                else {
-                    MessageBox.Show(Properties.strings.namingViolation);
+                else
+                {
+                    MessageBox.Show(strings.namingViolation);
                 }
             }
             else
             {
-                MessageBox.Show(Properties.strings.passwordAndUserFilled);
+                MessageBox.Show(strings.passwordAndUserFilled);
             }
         }
 
@@ -110,70 +117,47 @@ namespace allinthebox
             um.Focus();
         }
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                const int CS_DROPSHADOW = 0x20000;
-                CreateParams cp = base.CreateParams;
-                cp.ClassStyle |= CS_DROPSHADOW;
-                return cp;
-            }
-        }
-
         private void closeButton_Click(object sender, EventArgs e)
         {
-            MouseEventArgs me = (MouseEventArgs)e;
-            if (me.Button == MouseButtons.Left)
-            {
-                this.Close();
-            }
+            var me = (MouseEventArgs) e;
+            if (me.Button == MouseButtons.Left) Close();
         }
 
         private void closeButton_MouseEnter(object sender, EventArgs e)
         {
-            ToolTip tt = new ToolTip();
-            tt.SetToolTip(this.closeButton, Properties.strings.close);
-            this.closeButton.BackColor = Color.FromArgb(223, 1, 1);
-            this.closeButton.Image = allinthebox.Properties.Resources.close_white;
+            var tt = new ToolTip();
+            tt.SetToolTip(closeButton, strings.close);
+            closeButton.BackColor = Color.FromArgb(223, 1, 1);
+            closeButton.Image = Resources.close_white;
         }
 
         private void closeButton_MouseLeave(object sender, EventArgs e)
         {
-            this.closeButton.BackColor = Color.Transparent;
+            closeButton.BackColor = Color.Transparent;
             if (Style.iconStyle == Style.IconStyle.LIGHT)
-            {
-                this.closeButton.Image = allinthebox.Properties.Resources.close;
-            }
+                closeButton.Image = Resources.close;
             else
-            {
-                this.closeButton.Image = allinthebox.Properties.Resources.close_white;
-            }
+                closeButton.Image = Resources.close_white;
         }
-
-        int mouseX = 0, mouseY = 0;
-        bool mousedown, maximized;
-        int grabX = 0, grabY = 0;
 
         private void tableLayoutPanel1_CellPaint(object sender, TableLayoutCellPaintEventArgs e)
         {
             if (e.Row == 0)
-            {
-                using (SolidBrush brush = new SolidBrush(Color.Silver))
+                using (var brush = new SolidBrush(Color.Silver))
+                {
                     e.Graphics.FillRectangle(brush, e.CellBounds);
-            }
+                }
         }
 
         private void KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void bg_MouseDown(object sender, MouseEventArgs e)
         {
             mousedown = true;
-            grabX = (MousePosition.X - this.DesktopLocation.X);
-            grabY = (MousePosition.Y - this.DesktopLocation.Y);
+            grabX = MousePosition.X - DesktopLocation.X;
+            grabY = MousePosition.Y - DesktopLocation.Y;
         }
 
         private void bg_MouseMove(object sender, MouseEventArgs e)
@@ -182,14 +166,13 @@ namespace allinthebox
             {
                 mouseX = MousePosition.X - grabX;
                 mouseY = MousePosition.Y - grabY;
-                this.SetDesktopLocation(mouseX, mouseY);
+                SetDesktopLocation(mouseX, mouseY);
             }
         }
 
         private void bg_MouseUp(object sender, MouseEventArgs e)
         {
             mousedown = false;
-
         }
     }
 }

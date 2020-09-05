@@ -1,105 +1,89 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using System.Xml;
+using allinthebox.Properties;
 
 namespace allinthebox
 {
     public partial class image_view : Form
     {
+        private string currentStyle;
+        private int grabX, grabY;
+        private readonly int iconStyle;
         public Main main;
-        int iconStyle;
-        int maxWidth;
-        public image_view(Image img, String title, Main m)
+        private readonly int maxWidth;
+        private bool mousedown, maximized;
+
+        private int mouseX, mouseY;
+
+        private readonly string name = "img";
+
+        public image_view(Image img, string title, Main m)
         {
             InitializeComponent();
 
 
-            this.header.Text = Properties.strings.picture;
-            this.header.Text = title;
+            header.Text = strings.picture;
+            header.Text = title;
 
-            this.main = m;
-            this.Text = title;
-            this.MinimizeBox = false;
-            this.MaximizeBox = false;
+            main = m;
+            Text = title;
+            MinimizeBox = false;
+            MaximizeBox = false;
 
 
             //load style
             currentStyle = main.loadSettingsDataBase().SelectSingleNode("/settings/style").InnerXml;
             maxWidth = int.Parse(main.loadSettingsDataBase().SelectSingleNode("/settings/maxWidthImage").InnerXml);
 
-            ColorConverter cc = new ColorConverter();
+            var cc = new ColorConverter();
 
             //load colors and images
             if (Style.iconStyle == Style.IconStyle.DARK)
             {
-                this.closeButton.Image = allinthebox.Properties.Resources.close_white;
+                closeButton.Image = Resources.close_white;
                 iconStyle = 0;
             }
             else
             {
-                this.closeButton.Image = allinthebox.Properties.Resources.close;
+                closeButton.Image = Resources.close;
                 iconStyle = 1;
             }
 
             if (main.imageOnTop)
-            {
-                this.TopMost = true;
-            }
+                TopMost = true;
             else
-            {
-                this.TopMost = false;
-            }
+                TopMost = false;
 
             picture.Image = img;
 
-            int y = img.Height;
-            int x = img.Width;
+            var y = img.Height;
+            var x = img.Width;
 
             if (x <= maxWidth && y <= x)
             {
-                this.Width = img.Width;
-                this.Height = img.Height+36;
-                this.picture.Location = new Point(0, 36);
-                this.picture.Size = new Size(img.Width, img.Height);
+                Width = img.Width;
+                Height = img.Height + 36;
+                picture.Location = new Point(0, 36);
+                picture.Size = new Size(img.Width, img.Height);
             }
             else if (y <= maxWidth && x <= y)
             {
-                this.Width = img.Width;
-                this.Height = img.Height+36;
-                this.picture.Location = new Point(0, 36);
-                this.picture.Size = new Size(img.Width, img.Height);
+                Width = img.Width;
+                Height = img.Height + 36;
+                picture.Location = new Point(0, 36);
+                picture.Size = new Size(img.Width, img.Height);
             }
             else
             {
-                this.Width = maxWidth;
-                double differenz = (double)img.Height / (double)img.Width;
-                double produkt = (double)differenz * maxWidth;
-                int height = (int)Math.Floor(produkt);
-                this.Height = height + 36;
-                this.picture.Location = new Point(0, 36);
-                this.picture.Size = new Size(maxWidth, height);
+                Width = maxWidth;
+                var differenz = img.Height / (double) img.Width;
+                var produkt = differenz * maxWidth;
+                var height = (int) Math.Floor(produkt);
+                Height = height + 36;
+                picture.Location = new Point(0, 36);
+                picture.Size = new Size(maxWidth, height);
             }
-        }
-
-        string name = "img";
-
-        private void image_view_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Main.currentOpenWindows.Remove(name);
-
-        }
-
-        private void image_view_Load(object sender, EventArgs e)
-        {
-            Main.currentOpenWindows.Add(name);
         }
 
         protected override CreateParams CreateParams
@@ -107,52 +91,50 @@ namespace allinthebox
             get
             {
                 const int CS_DROPSHADOW = 0x20000;
-                CreateParams cp = base.CreateParams;
+                var cp = base.CreateParams;
                 cp.ClassStyle |= CS_DROPSHADOW;
                 return cp;
             }
         }
 
+        private void image_view_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Main.currentOpenWindows.Remove(name);
+        }
+
+        private void image_view_Load(object sender, EventArgs e)
+        {
+            Main.currentOpenWindows.Add(name);
+        }
+
         private void closeButton_Click(object sender, EventArgs e)
         {
-            MouseEventArgs me = (MouseEventArgs)e;
-            if (me.Button == MouseButtons.Left)
-            {
-                this.Close();
-            }
+            var me = (MouseEventArgs) e;
+            if (me.Button == MouseButtons.Left) Close();
         }
 
         private void closeButton_MouseEnter(object sender, EventArgs e)
         {
-            ToolTip tt = new ToolTip();
-            tt.SetToolTip(this.closeButton, Properties.strings.close);
-            this.closeButton.BackColor = Color.FromArgb(223, 1, 1);
-            this.closeButton.Image = allinthebox.Properties.Resources.close_white;
+            var tt = new ToolTip();
+            tt.SetToolTip(closeButton, strings.close);
+            closeButton.BackColor = Color.FromArgb(223, 1, 1);
+            closeButton.Image = Resources.close_white;
         }
 
         private void closeButton_MouseLeave(object sender, EventArgs e)
         {
-            this.closeButton.BackColor = Color.Transparent;
+            closeButton.BackColor = Color.Transparent;
             if (iconStyle == 1)
-            {
-                this.closeButton.Image = allinthebox.Properties.Resources.close;
-            }
+                closeButton.Image = Resources.close;
             else
-            {
-                this.closeButton.Image = allinthebox.Properties.Resources.close_white;
-            }
+                closeButton.Image = Resources.close_white;
         }
-
-        int mouseX = 0, mouseY = 0;
-        bool mousedown, maximized;
-        int grabX = 0, grabY = 0;
-        private string currentStyle;
 
         private void bg_MouseDown(object sender, MouseEventArgs e)
         {
             mousedown = true;
-            grabX = (MousePosition.X - this.DesktopLocation.X);
-            grabY = (MousePosition.Y - this.DesktopLocation.Y);
+            grabX = MousePosition.X - DesktopLocation.X;
+            grabY = MousePosition.Y - DesktopLocation.Y;
         }
 
         private void bg_MouseMove(object sender, MouseEventArgs e)
@@ -161,14 +143,13 @@ namespace allinthebox
             {
                 mouseX = MousePosition.X - grabX;
                 mouseY = MousePosition.Y - grabY;
-                this.SetDesktopLocation(mouseX, mouseY);
+                SetDesktopLocation(mouseX, mouseY);
             }
         }
 
         private void bg_MouseUp(object sender, MouseEventArgs e)
         {
             mousedown = false;
-
         }
     }
 }

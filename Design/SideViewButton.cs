@@ -1,28 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Transitions;
 
 namespace Design
 {
     public partial class SideViewButton : UserControl
     {
-        private Color _HoverColor = Color.Blue;
-        private string _ButtonText;
+        private Rectangle boundsRect;
+
+        private bool hover;
+
         public SideViewButton()
         {
-            this.Width = 120;
-            this.Height = 20;
+            Width = 120;
+            Height = 20;
             DoubleBuffered = true;
             InitializeComponent();
             CalcSize();
         }
+
+        public string ButtonText { get; set; }
+
+        public Color HoverColor { get; set; } = Color.Blue;
 
 
         protected override void OnResize(EventArgs e)
@@ -31,26 +30,18 @@ namespace Design
             CalcSize();
         }
 
-        private bool hover = false;
-        Rectangle boundsRect;
-
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            using (Brush b = new SolidBrush(hover ? _HoverColor : BackColor)) {
+            using (Brush b = new SolidBrush(hover ? HoverColor : BackColor))
+            {
                 e.Graphics.FillRectangle(b, boundsRect);
-                Font f = new Font(this.Font.Name, hover ? this.Font.Size + .25f : this.Font.Size, this.Font.Style);
-                SizeF stringSize = new SizeF();
-                stringSize = e.Graphics.MeasureString(this.ButtonText, f);
-                e.Graphics.DrawString(this.ButtonText,this.Font,new SolidBrush(this.ForeColor), new PointF((this.Width - stringSize.Width) / 2, (this.Height - stringSize.Height) / 2));
-
+                var f = new Font(Font.Name, hover ? Font.Size + .25f : Font.Size, Font.Style);
+                var stringSize = new SizeF();
+                stringSize = e.Graphics.MeasureString(ButtonText, f);
+                e.Graphics.DrawString(ButtonText, Font, new SolidBrush(ForeColor),
+                    new PointF((Width - stringSize.Width) / 2, (Height - stringSize.Height) / 2));
             }
-
-        }
-
-        public string ButtonText {
-            get { return _ButtonText; }
-            set { _ButtonText = value; }
         }
 
 
@@ -71,25 +62,20 @@ namespace Design
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            if (boundsRect.Contains(e.Location) && Form.ActiveForm==this.ParentForm)
+            if (boundsRect.Contains(e.Location) && Form.ActiveForm == ParentForm)
             {
                 hover = true;
                 Invalidate();
-
             }
-            else {
+            else
+            {
                 hover = false;
                 Invalidate();
-
             }
         }
 
-        public Color HoverColor {
-            get { return _HoverColor; }
-            set { _HoverColor = value; }
-        }
-
-        private void CalcSize() {
+        private void CalcSize()
+        {
             boundsRect = new Rectangle(0, 0, Width, Height);
             Invalidate();
         }
