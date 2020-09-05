@@ -62,8 +62,9 @@
     <ApplicationIcon>logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bunifu_UI_v1.52">
-      <HintPath>..\..\..\..\Desktop\Technik Ag Solution\Bunifu_UI_v1.52.dll</HintPath>
+    <Reference Include="Bunifu_UI_v1.52, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\Bunifu_UI_v1.52.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.8.14.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.8.14\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -325,6 +326,14 @@
     <None Include="Resources\logo.png" />
     <None Include="Resources\filter.png" />
     <None Include="Resources\filter_stroke.png" />
+    <Content Include="Library\Bunifu_UI_v1.52.dll" />
+    <Content Include="Library\HtmlAgilityPack.dll" />
+    <Content Include="Library\MetroFramework.dll" />
+    <Content Include="Library\TaskbarHook.dll" />
+    <Content Include="Library\Transitions.dll" />
+    <Content Include="Library\Xceed.Words.NET.dll" />
+    <Content Include="Library\zxing.dll" />
+    <Content Include="Library\zxing.presentation.dll" />
     <Content Include="logo.ico" />
     <Content Include="Resources\HTML\LogoSquare.png" />
     <None Include="Resources\Logo White.png" />
